@@ -14,6 +14,10 @@ class NewsVC: UIViewController {
         super.viewDidLoad()
     }
     
+    @IBAction func menuButtonAction(_ sender: UIButton) {
+        CommonMethods.openSideMenu(sender: sender, vc: self, sideMenuStatusBarColor: .lightGreen)
+    }
+    
     @objc func selectButtonActionFromCell() {
         
     }

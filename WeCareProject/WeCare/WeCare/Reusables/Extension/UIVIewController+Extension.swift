@@ -83,13 +83,35 @@ extension UIViewController {
     
     @discardableResult func push(viewController: UIViewController, animated: Bool = true) -> Bool {
         if let navController = selfNavigationController {
+            print(navController.viewControllers)
             DispatchQueue.main.async {
-                navController.pushViewController(viewController, animated: animated)
+                self.push_POP_to_ViewController(nav: navController, destinationVC: viewController, isAnimated: animated)
+                //navController.pushViewController(viewController, animated: animated)
             }
             return true
         } else {
             print("\nERROR: - \(self) is not having NavigationController")
             return false
+        }
+    }
+    
+    //MARK:- Push_Pop ViewController
+    func push_POP_to_ViewController(nav: UINavigationController, destinationVC: UIViewController, isAnimated:Bool) {
+        var VCFound:Bool = false
+        let viewControllers:NSArray = nav.viewControllers as NSArray
+        var indexofVC:NSInteger = 0
+        for  vc  in viewControllers  {
+            if (vc as AnyObject).nibName == (destinationVC.nibName){
+                VCFound = true
+                break
+            }else{
+                indexofVC += 1
+            }
+        }
+        if VCFound == true {
+            nav.popToViewController(viewControllers.object(at: indexofVC) as! UIViewController, animated: isAnimated)
+        }else{
+            nav.pushViewController(destinationVC , animated: isAnimated)
         }
     }
     

@@ -90,7 +90,7 @@ struct R: Rswift.Validatable {
   }
 
   #if os(iOS) || os(tvOS)
-  /// This `R.storyboard` struct is generated, and contains static references to 5 storyboards.
+  /// This `R.storyboard` struct is generated, and contains static references to 6 storyboards.
   struct storyboard {
     /// Storyboard `Dashboard`.
     static let dashboard = _R.storyboard.dashboard()
@@ -102,6 +102,8 @@ struct R: Rswift.Validatable {
     static let news = _R.storyboard.news()
     /// Storyboard `SideMenu`.
     static let sideMenu = _R.storyboard.sideMenu()
+    /// Storyboard `Who`.
+    static let who = _R.storyboard.who()
 
     #if os(iOS) || os(tvOS)
     /// `UIStoryboard(name: "Dashboard", bundle: ...)`
@@ -135,6 +137,13 @@ struct R: Rswift.Validatable {
     /// `UIStoryboard(name: "SideMenu", bundle: ...)`
     static func sideMenu(_: Void = ()) -> UIKit.UIStoryboard {
       return UIKit.UIStoryboard(resource: R.storyboard.sideMenu)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UIStoryboard(name: "Who", bundle: ...)`
+    static func who(_: Void = ()) -> UIKit.UIStoryboard {
+      return UIKit.UIStoryboard(resource: R.storyboard.who)
     }
     #endif
 
@@ -192,7 +201,7 @@ struct R: Rswift.Validatable {
     fileprivate init() {}
   }
 
-  /// This `R.image` struct is generated, and contains static references to 16 images.
+  /// This `R.image` struct is generated, and contains static references to 17 images.
   struct image {
     /// Image `downloadnature`.
     static let downloadnature = Rswift.ImageResource(bundle: R.hostingBundle, name: "downloadnature")
@@ -210,6 +219,8 @@ struct R: Rswift.Validatable {
     static let icn_link_inquiries = Rswift.ImageResource(bundle: R.hostingBundle, name: "icn_link_inquiries")
     /// Image `icn_link_whoiswho`.
     static let icn_link_whoiswho = Rswift.ImageResource(bundle: R.hostingBundle, name: "icn_link_whoiswho")
+    /// Image `icn_linkarrow`.
+    static let icn_linkarrow = Rswift.ImageResource(bundle: R.hostingBundle, name: "icn_linkarrow")
     /// Image `icn_menu_event`.
     static let icn_menu_event = Rswift.ImageResource(bundle: R.hostingBundle, name: "icn_menu_event")
     /// Image `icn_menu_inquiries`.
@@ -280,6 +291,13 @@ struct R: Rswift.Validatable {
     /// `UIImage(named: "icn_link_whoiswho", bundle: ..., traitCollection: ...)`
     static func icn_link_whoiswho(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.icn_link_whoiswho, compatibleWith: traitCollection)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UIImage(named: "icn_linkarrow", bundle: ..., traitCollection: ...)`
+    static func icn_linkarrow(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
+      return UIKit.UIImage(resource: R.image.icn_linkarrow, compatibleWith: traitCollection)
     }
     #endif
 
@@ -376,7 +394,7 @@ struct R: Rswift.Validatable {
     fileprivate init() {}
   }
 
-  /// This `R.reuseIdentifier` struct is generated, and contains static references to 3 reuse identifiers.
+  /// This `R.reuseIdentifier` struct is generated, and contains static references to 4 reuse identifiers.
   struct reuseIdentifier {
     /// Reuse identifier `DashboardTableViewCell`.
     static let dashboardTableViewCell: Rswift.ReuseIdentifier<DashboardTableViewCell> = Rswift.ReuseIdentifier(identifier: "DashboardTableViewCell")
@@ -384,6 +402,8 @@ struct R: Rswift.Validatable {
     static let newsTableViewCell: Rswift.ReuseIdentifier<NewsTableViewCell> = Rswift.ReuseIdentifier(identifier: "NewsTableViewCell")
     /// Reuse identifier `SideMenuTableViewCell`.
     static let sideMenuTableViewCell: Rswift.ReuseIdentifier<SideMenuTableViewCell> = Rswift.ReuseIdentifier(identifier: "SideMenuTableViewCell")
+    /// Reuse identifier `WhoTableViewCell`.
+    static let whoTableViewCell: Rswift.ReuseIdentifier<WhoTableViewCell> = Rswift.ReuseIdentifier(identifier: "WhoTableViewCell")
 
     fileprivate init() {}
   }
@@ -479,6 +499,9 @@ struct _R: Rswift.Validatable {
       #endif
       #if os(iOS) || os(tvOS)
       try sideMenu.validate()
+      #endif
+      #if os(iOS) || os(tvOS)
+      try who.validate()
       #endif
     }
 
@@ -597,6 +620,30 @@ struct _R: Rswift.Validatable {
           if UIKit.UIColor(named: "steelBlue", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Color named 'steelBlue' is used in storyboard 'SideMenu', but couldn't be loaded.") }
         }
         if _R.storyboard.sideMenu().sideMenuNavigationController() == nil { throw Rswift.ValidationError(description:"[R.swift] ViewController with identifier 'sideMenuNavigationController' could not be loaded from storyboard 'SideMenu' as 'SideMenu.SideMenuNavigationController'.") }
+      }
+
+      fileprivate init() {}
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    struct who: Rswift.StoryboardResourceType, Rswift.Validatable {
+      let bundle = R.hostingBundle
+      let name = "Who"
+      let whoVC = StoryboardViewControllerResource<WhoVC>(identifier: "WhoVC")
+
+      func whoVC(_: Void = ()) -> WhoVC? {
+        return UIKit.UIStoryboard(resource: self).instantiateViewController(withResource: whoVC)
+      }
+
+      static func validate() throws {
+        if UIKit.UIImage(named: "icn_linkarrow", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'icn_linkarrow' is used in storyboard 'Who', but couldn't be loaded.") }
+        if UIKit.UIImage(named: "icn_menu", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'icn_menu' is used in storyboard 'Who', but couldn't be loaded.") }
+        if UIKit.UIImage(named: "icn_menu_whoiswho", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'icn_menu_whoiswho' is used in storyboard 'Who', but couldn't be loaded.") }
+        if #available(iOS 11.0, tvOS 11.0, *) {
+          if UIKit.UIColor(named: "grayNew", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Color named 'grayNew' is used in storyboard 'Who', but couldn't be loaded.") }
+        }
+        if _R.storyboard.who().whoVC() == nil { throw Rswift.ValidationError(description:"[R.swift] ViewController with identifier 'whoVC' could not be loaded from storyboard 'Who' as 'WhoVC'.") }
       }
 
       fileprivate init() {}

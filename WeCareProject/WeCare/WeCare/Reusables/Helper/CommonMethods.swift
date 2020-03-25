@@ -15,13 +15,19 @@ struct  CommonMethods {
     /// - Parameters:
     ///   - sender: UIButton refrence
     ///   - vc: Refrence of UIViewController
-    static func openSideMenu(sender: UIButton, vc: UIViewController) {
+    static func openSideMenu(sender: UIButton, vc: UIViewController, sideMenuStatusBarColor: UIColor = .white) {
         sender.isUserInteractionEnabled = false
-        guard let sideMenu = SideMenuManager.default.leftMenuNavigationController else { return }
+        guard let sideMenu = SideMenuManager.default.leftMenuNavigationController, let sideMenuVC = sideMenu.viewControllers[0] as? SideMenuVC else { return }
+        sideMenuVC.statusBarColor = sideMenuStatusBarColor
         vc.present(sideMenu, animated: true, completion: {
             sender.isUserInteractionEnabled = true
         })
     }
+    
+//    static func closeSideMenu() {
+//        guard let sideMenu = SideMenuManager.default.leftMenuNavigationController else { return }
+//        sideMenu.dismiss(animated: true, completion: nil)
+//    }
     
     /// Generating random string
     ///

@@ -23,6 +23,9 @@
 		8462B512241FF91100A2C933 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8462B511241FF91100A2C933 /* Enums.swift */; };
 		8462B514241FFAEE00A2C933 /* Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8462B513241FFAEE00A2C933 /* Messages.swift */; };
 		8462B516241FFB2200A2C933 /* ModelKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8462B515241FFB2200A2C933 /* ModelKeys.swift */; };
+		848A321F242BC4EF009A5495 /* Who.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 848A321E242BC4EF009A5495 /* Who.storyboard */; };
+		848A3221242BC50D009A5495 /* WhoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848A3220242BC50D009A5495 /* WhoVC.swift */; };
+		848A3223242BCE74009A5495 /* WhoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848A3222242BCE74009A5495 /* WhoTableViewCell.swift */; };
 		84967D64241CB847008BB223 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84967D58241CB847008BB223 /* Assets.xcassets */; };
 		84967D65241CB847008BB223 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84967D59241CB847008BB223 /* LaunchScreen.storyboard */; };
 		84967D67241CB847008BB223 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84967D62241CB847008BB223 /* AppDelegate.swift */; };
@@ -59,6 +62,9 @@
 		8462B511241FF91100A2C933 /* Enums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		8462B513241FFAEE00A2C933 /* Messages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Messages.swift; sourceTree = "<group>"; };
 		8462B515241FFB2200A2C933 /* ModelKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelKeys.swift; sourceTree = "<group>"; };
+		848A321E242BC4EF009A5495 /* Who.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Who.storyboard; sourceTree = "<group>"; };
+		848A3220242BC50D009A5495 /* WhoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhoVC.swift; sourceTree = "<group>"; };
+		848A3222242BCE74009A5495 /* WhoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhoTableViewCell.swift; sourceTree = "<group>"; };
 		84967D58241CB847008BB223 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		84967D5A241CB847008BB223 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		84967D62241CB847008BB223 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -180,6 +186,32 @@
 			path = Helper;
 			sourceTree = "<group>";
 		};
+		848A321B242BC4AE009A5495 /* WhoModule */ = {
+			isa = PBXGroup;
+			children = (
+				848A321D242BC4D5009A5495 /* View */,
+				848A321C242BC4CE009A5495 /* Controller */,
+				848A321E242BC4EF009A5495 /* Who.storyboard */,
+			);
+			path = WhoModule;
+			sourceTree = "<group>";
+		};
+		848A321C242BC4CE009A5495 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				848A3220242BC50D009A5495 /* WhoVC.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		848A321D242BC4D5009A5495 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				848A3222242BCE74009A5495 /* WhoTableViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		84967D56241CB847008BB223 /* Reusables */ = {
 			isa = PBXGroup;
 			children = (
@@ -203,6 +235,7 @@
 		84967D5D241CB847008BB223 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				848A321B242BC4AE009A5495 /* WhoModule */,
 				8447221B2427DE36006C5BA0 /* News */,
 				8448C4A8241FBCAD00642551 /* SideMenu */,
 				84967D88241CED53008BB223 /* DashboardVC */,
@@ -403,6 +436,7 @@
 			files = (
 				84967D6C241CB897008BB223 /* Login.storyboard in Resources */,
 				8448C4AE241FBCD300642551 /* SideMenu.storyboard in Resources */,
+				848A321F242BC4EF009A5495 /* Who.storyboard in Resources */,
 				84967D64241CB847008BB223 /* Assets.xcassets in Resources */,
 				8447221F2427DE9D006C5BA0 /* News.storyboard in Resources */,
 				8447221424278F17006C5BA0 /* SideMenuTableViewCell.xib in Resources */,
@@ -496,7 +530,9 @@
 				84F6F8E62420109800D93B3A /* ApiConfiguration.swift in Sources */,
 				84967D7F241CCD2B008BB223 /* String.swift in Sources */,
 				84F6F8EC2420136D00D93B3A /* String+Extension.swift in Sources */,
+				848A3223242BCE74009A5495 /* WhoTableViewCell.swift in Sources */,
 				841672E02422A3B600C36E86 /* DashboardTableViewCell.swift in Sources */,
+				848A3221242BC50D009A5495 /* WhoVC.swift in Sources */,
 				84F6F8DD24200E5C00D93B3A /* R.generated.swift in Sources */,
 				8447221624278F3C006C5BA0 /* SideMenuSectionHeader.swift in Sources */,
 				8462B516241FFB2200A2C933 /* ModelKeys.swift in Sources */,

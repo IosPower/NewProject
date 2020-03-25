@@ -80,11 +80,13 @@ class SideMenuVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        viewStarusbar.backgroundColor = statusBarColor
-        
         registerViews(forTableView: menuTableView)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewStarusbar.backgroundColor = statusBarColor
+    }
   
     func registerViews(forTableView tableView: UITableView) {
         // Cell
@@ -93,7 +95,9 @@ class SideMenuVC: UIViewController {
     
     ///
     @IBAction func homeButtonAction(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+        if let newsVC = R.storyboard.dashboard.dashboardVC() {
+            self.push(viewController: newsVC, animated: false)
+        }
     }
     ///
     @IBAction func bottomMenuOpenCloseButtonAction(_ sender: Any) {
@@ -118,12 +122,28 @@ class SideMenuVC: UIViewController {
     }
     ///
     @objc func menuButtonActionFromCell(sender: UIButton) {
-        let row = sender.tag
-        if row == 0 {
-                       if let newsVC = R.storyboard.news.newsVC() {
-                           self.push(viewController: newsVC)
-                       }
-                   }
+        let buttonPosition:CGPoint = sender.convert(CGPoint.zero, to:menuTableView)
+        guard let indexPath = self.menuTableView.indexPathForRow(at: buttonPosition) else {return}
+        switch (indexPath.section, indexPath.row) {
+        case (0, 0):
+            if let newsVC = R.storyboard.news.newsVC() {
+                self.push(viewController: newsVC, animated: false)
+            }
+        case (0, 1):
+            if let newsVC = R.storyboard.news.newsVC() {
+                self.push(viewController: newsVC, animated: false)
+            }
+        case (1, 0):
+            if let newsVC = R.storyboard.news.newsVC() {
+                self.push(viewController: newsVC, animated: false)
+            }
+        case (1, 0):
+            if let newsVC = R.storyboard.news.newsVC() {
+                self.push(viewController: newsVC, animated: false)
+            }
+        default:
+            break
+        }
     }
     
     @objc func headerButtonActionFromCell(sender: UIButton) {
@@ -139,7 +159,20 @@ class SideMenuVC: UIViewController {
             }
             menuTableView.reloadData()
         } else {
-           
+           switch (section) {
+           case 0:
+               print("")
+           case 1:
+               print("")
+           case 2:
+               print("")
+           case 3:
+               if let whoVC = R.storyboard.who.whoVC() {
+                   self.push(viewController: whoVC, animated: false)
+               }
+           default:
+               break
+           }
         }
     }
     

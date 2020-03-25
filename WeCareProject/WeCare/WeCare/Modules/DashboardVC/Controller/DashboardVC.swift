@@ -25,18 +25,16 @@ class DashboardVC: UIViewController {
    
     /// Setting SideMenu
     func setupSideMenu() {
-        guard let leftMenuNavigationController = R.storyboard.sideMenu().instantiateViewController(withIdentifier: "SideMenuNavigationController") as? SideMenuNavigationController,
-            leftMenuNavigationController.viewControllers.count > 0,
-            let sideMenuVC = leftMenuNavigationController.viewControllers[0] as? SideMenuVC else { return }
-        sideMenuVC.statusBarColor = .white
-        
-        leftMenuNavigationController.presentationStyle.backgroundColor = UIColor.clear
-        leftMenuNavigationController.menuWidth = UIScreen.main.bounds.width - 80
-        leftMenuNavigationController.presentationStyle = .viewSlideOutMenuIn
-        leftMenuNavigationController.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
-        leftMenuNavigationController.navigationBar.isHidden = true
-        leftMenuNavigationController.statusBarEndAlpha = 0
-        SideMenuManager.default.leftMenuNavigationController = leftMenuNavigationController
+        guard let sideMenuNavigationController = R.storyboard.sideMenu().instantiateViewController(withIdentifier: "SideMenuNavigationController") as? SideMenuNavigationController,
+            sideMenuNavigationController.viewControllers.count > 0 else { return }
+       
+        sideMenuNavigationController.presentationStyle.backgroundColor = UIColor.clear
+        sideMenuNavigationController.menuWidth = UIScreen.main.bounds.width - 80
+        sideMenuNavigationController.presentationStyle = .viewSlideOutMenuIn
+        sideMenuNavigationController.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        sideMenuNavigationController.navigationBar.isHidden = true
+        sideMenuNavigationController.statusBarEndAlpha = 0
+        SideMenuManager.default.leftMenuNavigationController = sideMenuNavigationController
     }
     
     @IBAction func menuButtonAction(_ sender: UIButton) {
