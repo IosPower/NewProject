@@ -82,15 +82,15 @@ class LoginVC: UIViewController {
     
     /// callApi for login
     func loginAPICall() {
-        let parameters = ["email": "mathieu.wannyn@bulex-services.be",
+        let parameters = ["email": "kris.michiels@vaillant.com",
                           "password": "123456"]
-        self.navigateToDashboardVC()
-//        loginViewModel?.loginApi(parameters: parameters, success: { [weak self] in
-//            self?.navigateToDashboardVC()
-//            }, failure: { [weak self] (responseDict) in
-//                if let message = responseDict[ModelKeys.ResponseKeys.message] as? String {
-//                    self?.showAlert(message: message, buttonTitle: Messages.Button.okButton)
-//                }
-//        })
+//        self.navigateToDashboardVC()
+        loginViewModel?.loginApi(parameters: parameters, success: { [weak self] in
+            self?.navigateToDashboardVC()
+            }, failure: { [weak self] (responseDict) in
+                if let message = responseDict[ModelKeys.ResponseKeys.message] as? String {
+                    self?.showAlert(message: message, buttonTitle: Messages.Button.okButton)
+                }
+        })
     }
 }

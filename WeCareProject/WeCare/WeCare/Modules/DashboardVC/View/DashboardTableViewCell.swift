@@ -3,7 +3,7 @@
 //  WeCare
 //
 //  Created by Admin on 19/03/20.
-//  Copyright © 2020 Dinesh Pathak. All rights reserved.
+//  Copyright © 2020 Piyush. All rights reserved.
 //
 
 import UIKit

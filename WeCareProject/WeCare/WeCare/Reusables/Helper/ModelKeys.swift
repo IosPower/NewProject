@@ -70,7 +70,7 @@ struct ModelKeys {
     /// response keys
     struct ResponseKeys {
         static let status = "status"
-        static let result = "result"
+        static let data = "data"
         static let message = "message"
     }
 }

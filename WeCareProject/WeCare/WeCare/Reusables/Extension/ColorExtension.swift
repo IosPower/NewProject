@@ -26,4 +26,20 @@ extension UIColor {
     static var grayNew: UIColor {
         return R.color.grayNew() ?? UIColor(red: 121/255, green: 122/255, blue: 124/255, alpha: 1)
     }
+    ///
+    static var newsRecentMessagesBackgroundColor: UIColor {
+        return UIColor(red: 242/255, green: 246/255, blue: 220/255, alpha: 1)
+    }
+    ///
+    static var newsRecentMessagesCategoryBackgroundColor: UIColor {
+        return UIColor(red: 227/255, green: 236/255, blue: 182/255, alpha: 1)
+    }
+    ///
+    static var eventsRecentMessagesBackgroundColor: UIColor {
+        return UIColor(red: 245/255, green: 222/255, blue: 188/255, alpha: 1)
+    }
+    ///
+    static var eventRecentMessagesCategoryBackgroundColor: UIColor {
+        return UIColor(red: 241/255, green: 206/255, blue: 152/255, alpha: 1)
+    }
 }

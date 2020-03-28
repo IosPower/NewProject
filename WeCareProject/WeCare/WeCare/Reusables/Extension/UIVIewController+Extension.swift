@@ -130,3 +130,32 @@ extension UIViewController {
     }
     
 }
+
+// MARK: - Window Extension
+extension UIWindow {
+    ///
+    func showHud(title: String? = nil) {
+        hideHud()
+        DispatchQueue.main.async(execute: {
+            let hudMbProgress = MBProgressHUD.showAdded(to: self, animated: true)
+            hudMbProgress.contentColor = UIColor.white
+            if title == nil {
+                hudMbProgress.label.text = ""
+            } else {
+                hudMbProgress.label.text = title ?? ""
+            }
+            hudMbProgress.bezelView.alpha = 1.0
+            hudMbProgress.bezelView.color = UIColor.clear
+            hudMbProgress.bezelView.style = .solidColor
+            hudMbProgress.backgroundView.color = UIColor.black
+            hudMbProgress.backgroundView.alpha = 0.5
+            hudMbProgress.backgroundView.style = .solidColor
+        })
+    }
+    ///
+    func hideHud() {
+        DispatchQueue.main.async(execute: {
+            MBProgressHUD.hide(for: self, animated: true)
+        })
+    }
+}

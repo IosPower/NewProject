@@ -52,9 +52,7 @@ class ApiConfiguration: NSObject {
                 //baseURL = ""
                 baseURL = ""
             }
-            
-            baseURL = "http://www.testwecareapp.com/api/"
-            
+            baseURL = "http://webadmin.testwecareapp.com/api/"
             serverURL = baseURL + currentVersion + "/"
         }
     }

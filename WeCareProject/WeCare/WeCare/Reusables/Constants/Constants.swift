@@ -21,6 +21,9 @@ class Constants: NSObject {
     ///
     static var MAINWINDOW = UIApplication.shared.windows
     
+    ///
+    static let window = Constants.AppDel.window
+    
     // MARK: - iPhone size
     ///
     static let isiPhone5: Bool = 568 == UIScreen.main.bounds.size.height ? true : false
@@ -32,4 +35,6 @@ class Constants: NSObject {
     static let isiPhoneX: Bool = 812 == UIScreen.main.bounds.size.height ? true : false
     ///
     static let isiPhoneXR: Bool = 896 == UIScreen.main.bounds.size.height ? true : false
+   
+    
 }

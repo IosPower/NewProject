@@ -14,5 +14,21 @@ struct ApiList {
     struct UserManagement {
         ///
         static let login = "user-login"
+        ///
+        static let userList = "user-list"
     }
+    
+    ///
+    struct News {
+        ///
+        static let newsList = "messages-list"
+        
+    }
+    ///
+    struct Event {
+        ///
+        static let eventList = "event-list"
+        
+    }
+    
 }

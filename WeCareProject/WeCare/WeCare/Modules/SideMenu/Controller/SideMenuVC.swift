@@ -167,7 +167,7 @@ class SideMenuVC: UIViewController {
            case 2:
                print("")
            case 3:
-               if let whoVC = R.storyboard.who.whoVC() {
+               if let whoVC = R.storyboard.user.userVC() {
                    self.push(viewController: whoVC, animated: false)
                }
            default:
