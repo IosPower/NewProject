@@ -11,7 +11,6 @@ import IQKeyboardManagerSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    
     /// The window for this application
     var window: UIWindow?
     
