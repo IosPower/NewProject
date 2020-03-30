@@ -31,15 +31,46 @@ extension UIColor {
         return UIColor(red: 242/255, green: 246/255, blue: 220/255, alpha: 1)
     }
     ///
-    static var newsRecentMessagesCategoryBackgroundColor: UIColor {
-        return UIColor(red: 227/255, green: 236/255, blue: 182/255, alpha: 1)
+    static var newsTakingCareCategoryBackgroundColor: UIColor {
+        return UIColor(displayP3Red: 189/255, green: 207/255, blue: 89/255, alpha: 1.0)
     }
+    ///
+    static var newsVaillantGroupCategoryBackgroundColor: UIColor {
+        return UIColor(displayP3Red: 223/255, green: 232/255, blue: 177/255, alpha: 1.0)
+    }
+    ///
+    static var newsSeparatorLabelBackgroundColor: UIColor {
+        return UIColor(red: 228/255, green: 238/255, blue: 185/255, alpha: 1)
+    }
+  
     ///
     static var eventsRecentMessagesBackgroundColor: UIColor {
         return UIColor(red: 245/255, green: 222/255, blue: 188/255, alpha: 1)
     }
     ///
-    static var eventRecentMessagesCategoryBackgroundColor: UIColor {
-        return UIColor(red: 241/255, green: 206/255, blue: 152/255, alpha: 1)
+    static var eventsKlantenCategoryBackgroundColor: UIColor {
+        return UIColor(displayP3Red: 231/255, green: 178/255, blue: 108/255, alpha: 1.0)
+    }
+    ///
+    static var eventsPersonelCategoryBackgroundColor: UIColor {
+        return UIColor(displayP3Red: 238/255, green: 198/255, blue: 145/255, alpha: 1.0)
+    }
+    ///
+    static var eventsSeparatorLabelBackgroundColor: UIColor {
+        return UIColor(red: 238/255, green: 198/255, blue: 145/255, alpha: 1)
+    }
+    
+
+    ///
+    static var surveyRecentBackgroundColor: UIColor {
+        return UIColor(red: 232/255, green: 238/255, blue: 246/255, alpha: 1)
+    }
+    ///
+    static var surveyRecentCategoryBackgroundColor: UIColor {
+        return steelBlue
+    }
+    ///
+    static var surveySeparatorLabelBackgroundColor: UIColor {
+        return UIColor(red: 213/255, green: 215/255, blue: 230/255, alpha: 1)
     }
 }

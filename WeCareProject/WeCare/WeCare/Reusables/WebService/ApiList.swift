@@ -30,5 +30,16 @@ struct ApiList {
         static let eventList = "event-list"
         
     }
-    
+    ///
+    struct Survey {
+        ///
+        static let surveyList = "survey-list"
+        
+    }
+    ///
+    struct Dashboard {
+        ///
+        static let dashboardList = "dashboard-list"
+        
+    }
 }

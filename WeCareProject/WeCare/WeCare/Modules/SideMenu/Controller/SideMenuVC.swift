@@ -64,7 +64,7 @@ class SideMenuVC: UIViewController {
             "color" : UIColor.saffron,
             "isExpand": false
         ], [
-            "keyName": "ENQUETES",
+            "keyName": "ENQUÊTE",
             "keyData": [],
             "imgName": "icn_menu_inquiries",
             "color" : UIColor.steelBlue,
@@ -135,6 +135,7 @@ class SideMenuVC: UIViewController {
             }
         case (1, 0):
             if let newsVC = R.storyboard.news.newsVC() {
+                newsVC.sideMenuSectionScreen = .event
                 self.push(viewController: newsVC, animated: false)
             }
         case (1, 0):
@@ -165,7 +166,10 @@ class SideMenuVC: UIViewController {
            case 1:
                print("")
            case 2:
-               print("")
+                if let newsVC = R.storyboard.news.newsVC() {
+                              newsVC.sideMenuSectionScreen = .survey
+                              self.push(viewController: newsVC, animated: false)
+                          }
            case 3:
                if let whoVC = R.storyboard.user.userVC() {
                    self.push(viewController: whoVC, animated: false)

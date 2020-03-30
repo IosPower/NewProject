@@ -614,7 +614,6 @@ struct _R: Rswift.Validatable {
         if UIKit.UIImage(named: "icn_arrow", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'icn_arrow' is used in storyboard 'News', but couldn't be loaded.") }
         if UIKit.UIImage(named: "icn_downarrow", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'icn_downarrow' is used in storyboard 'News', but couldn't be loaded.") }
         if UIKit.UIImage(named: "icn_menu", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'icn_menu' is used in storyboard 'News', but couldn't be loaded.") }
-        if UIKit.UIImage(named: "icn_menu_event", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'icn_menu_event' is used in storyboard 'News', but couldn't be loaded.") }
         if UIKit.UIImage(named: "icn_menu_news", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'icn_menu_news' is used in storyboard 'News', but couldn't be loaded.") }
         if #available(iOS 11.0, tvOS 11.0, *) {
           if UIKit.UIColor(named: "lightGreen", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Color named 'lightGreen' is used in storyboard 'News', but couldn't be loaded.") }

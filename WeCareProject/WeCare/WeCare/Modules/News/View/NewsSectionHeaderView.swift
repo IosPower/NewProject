@@ -10,6 +10,9 @@ import UIKit
 
 class NewsSectionHeaderView: UIView {
 
+    ///
     @IBOutlet weak var newsSectionTitleLabel: UILabel!
+    ///
+    @IBOutlet weak var sectionSeparatorLabel: UILabel!
     
 }

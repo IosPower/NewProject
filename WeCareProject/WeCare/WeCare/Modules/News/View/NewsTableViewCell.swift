@@ -33,25 +33,89 @@ class NewsTableViewCell: UITableViewCell {
     @IBOutlet weak var categoryView: UIView!
     ///
     @IBOutlet weak var newSelectionView: UIView!
+    ///
+    @IBOutlet weak var separatorLabel: UILabel!
+    ///
+    @IBOutlet weak var addressAndEventDataLabel: UILabel!
+    ///
+    @IBOutlet weak var titleLabelTopConstraint: NSLayoutConstraint!
+    
+    ///
+    var sideMenuSectionScreen: SideMenuSectionScreen?
     
     let closeValue: CGFloat = 20
     let openValue: CGFloat = 147
     
-    func displayData(date: String, title: String, description: String, imgPath: String?, typeImgName: String, categoryName: String, index: Int) {
-        
-        var dateAndCategory = date
-        if !categoryName.isEmpty {
-            dateAndCategory = dateAndCategory + " l " + categoryName
+    func setupCell(cellBgColor: UIColor, separatorViewBgColor: UIColor) {
+        guard let sideMenuSectionScreenObject = sideMenuSectionScreen else {
+            return
         }
-        categoryNameLabel.text = categoryName
-        dateAndCateoryLabel.text = dateAndCategory
-        titleLabel.text = title
-        descriptionLabel.text = description
-        categoryTypeImgView.image = UIImage(named: typeImgName)
-        getNewsImage(newsImagePath: imgPath)
+        var typeImg: UIImage?
+        var separatorLabelBgColor = UIColor.clear
+        
+        var categoryNameTextColor = UIColor.black
+        // here category view bgcolor according category WIP
+        switch sideMenuSectionScreenObject {
+        case .news:
+            categoryView.backgroundColor = .newsTakingCareCategoryBackgroundColor
+            newSelectionView.layer.borderColor = UIColor.newsRecentMessagesBackgroundColor.cgColor
+            separatorLabelBgColor = .newsSeparatorLabelBackgroundColor
+            typeImg = R.image.icn_menu_news()
+        case .event:
+            categoryView.backgroundColor = .eventsKlantenCategoryBackgroundColor
+            newSelectionView.layer.borderColor = UIColor.eventsRecentMessagesBackgroundColor.cgColor
+            separatorLabelBgColor = .eventsSeparatorLabelBackgroundColor
+            typeImg = R.image.icn_menu_event()
+        case .survey:
+            categoryNameTextColor = .white
+            categoryView.backgroundColor = .surveyRecentCategoryBackgroundColor
+            newSelectionView.layer.borderColor = UIColor.surveyRecentBackgroundColor.cgColor
+            separatorLabelBgColor = .surveySeparatorLabelBackgroundColor
+            typeImg = R.image.icn_menu_inquiries()
+        }
+        
+        newSelectionView.layer.borderWidth = 1.5
+        categoryTypeImgView.image = typeImg
+        separatorLabel.backgroundColor = separatorLabelBgColor
+        separatorView.backgroundColor = separatorViewBgColor
+        
+        categoryNameLabel.textColor = categoryNameTextColor
+        
+        // this is cell background color
+        self.backgroundColor = cellBgColor
     }
     
-    func getNewsImage(newsImagePath: String?) {
+    func displayData(modelObject: NewsDataModel?, index: Int) {
+        guard let sideMenuSectionScreenObject = sideMenuSectionScreen else {
+            return
+        }
+        if let model = modelObject {
+            var dateAndCategory = model.created_at
+            if !model.category.isEmpty {
+                dateAndCategory = dateAndCategory + " l " + model.category
+            }
+            categoryNameLabel.text = model.category.isEmpty ? sideMenuSectionScreenObject.rawValue : model.category
+            dateAndCateoryLabel.text = dateAndCategory
+            titleLabel.text = model.title
+            descriptionLabel.text = model.short_description
+            getNewsImage(newsImagePath: model.image)
+            
+            titleLabelTopConstraint.constant = (model.address.isEmpty && model.event_start_date.isEmpty && model.event_time.isEmpty) ? 0 : 5
+            let eventStartDateAndTime = model.event_start_date + " " + model.event_time
+            let resultStr = model.address + (model.address.isEmpty ? "" : (model.event_start_date.isEmpty ? "" : " l ")) + eventStartDateAndTime
+            addressAndEventDataLabel.text = resultStr.removeWhiteSpace()
+        } else {
+            categoryNameLabel.text = ""
+            dateAndCateoryLabel.text = ""
+            titleLabel.text = ""
+            descriptionLabel.text = ""
+            addressAndEventDataLabel.text = ""
+            getNewsImage(newsImagePath: nil)
+            titleLabelTopConstraint.constant = 0
+        }
+    }
+    
+   private func getNewsImage(newsImagePath: String?) {
         guard let imagePath = newsImagePath?.replacingOccurrences(of: " ", with: "%20") else {
             newsImageViewWidthConstraint.constant = closeValue
             return imgView.image = nil
@@ -71,20 +135,9 @@ class NewsTableViewCell: UITableViewCell {
         }
     }
     
-    func setNewImage(newsImage: UIImage?) {
-        imgView.image = nil
+  private  func setNewImage(newsImage: UIImage?) {
+        imgView.image = newsImage
         newsImageViewWidthConstraint.constant = newsImage == nil ? closeValue : openValue
-    }
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        
-        // Configure the view for the selected state
     }
     
 }

@@ -14,11 +14,37 @@ class DashboardVC: UIViewController {
     // MARK: - Outlet
 
     @IBOutlet weak var dashboardTableView: UITableView!
+    ///
+    @IBOutlet weak var newsView: UIView!
+    ///
+    @IBOutlet weak var eventView: UIView!
+    ///
+    @IBOutlet weak var surveyView: UIView!
+    ///
+    @IBOutlet weak var userListView: UIView!
+    ///
+    @IBOutlet weak var newsCountLabel: UILabel!
+    ///
+    @IBOutlet weak var eventCountLabel: UILabel!
+    ///
+    @IBOutlet weak var surveyCountLabel: UILabel!
+    ///
+    @IBOutlet weak var newsLabel: UILabel!
+    ///
+    @IBOutlet weak var eventLabel: UILabel!
+    ///
+    @IBOutlet weak var surveyLabel: UILabel!
+    ///
+    @IBOutlet weak var userLabel: UILabel!
+    
+    ///
+    var dashboardViewModel: DashboardViewModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        dashboardViewModel = DashboardViewModel(vc: self)
         setupSideMenu()
+        newsListApiCall()
     }
     
     // MARK: - Helper methods
@@ -37,6 +63,12 @@ class DashboardVC: UIViewController {
         SideMenuManager.default.leftMenuNavigationController = sideMenuNavigationController
     }
     
+    func displayDashboardData() {
+        newsCountLabel.text = "\(dashboardViewModel?.message_unread_count ?? 0)"
+        eventCountLabel.text = "\(dashboardViewModel?.event_unread_count ?? 0)"
+        surveyCountLabel.text = "\(dashboardViewModel?.survey_unread_count ?? 0)"
+    }
+    
     @IBAction func menuButtonAction(_ sender: UIButton) {
         CommonMethods.openSideMenu(sender: sender, vc: self)
     }
@@ -44,30 +76,52 @@ class DashboardVC: UIViewController {
     @objc func selectButtonActionFromCell() {
         
     }
+    
+    func newsListApiCall() {
+        Constants.window?.showHud()
+        dashboardViewModel?.dashboardListAPI(success: {
+            Constants.window?.hideHud()
+            self.displayDashboardData()
+            self.dashboardTableView.reloadData()
+        }, failure: { [weak self] (responseDict) in
+            Constants.window?.hideHud()
+            if let message = responseDict[ModelKeys.ResponseKeys.message] as? String {
+                self?.showAlert(message: message, buttonTitle: Messages.Button.okButton)
+            }
+        })
+    }
 }
 
 // MARK: - UITableViewDataSource
 extension DashboardVC: UITableViewDataSource {
     ///
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return dashboardViewModel?.dashboardDataModelArray.count ?? 0
     }
     
     ///
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cellProjectList = tableView.dequeueReusableCell(withIdentifier: "DashboardTableViewCell") as? DashboardTableViewCell else {
+        guard let cellDashboard = tableView.dequeueReusableCell(withIdentifier: "DashboardTableViewCell") as? DashboardTableViewCell else {
             fatalError("Cell not exists in storyboard")
         }
-        cellProjectList.dateLabel.text = "21 JAN 2020"
-        cellProjectList.titleLabel.text = "Lorem ipsum dolor sit amet"
-        cellProjectList.descriptionLabel.text = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum"
-        cellProjectList.imgView.image = UIImage(named: "downloadnature")
-        cellProjectList.categoryTypeImgView.image = UIImage(named: "icn_menu_event")
-        cellProjectList.selectButton.tag = indexPath.row
-        cellProjectList.selectButton.addTarget(self, action: #selector(selectButtonActionFromCell), for: .touchUpInside)
-        return cellProjectList
+        guard let dashboardModel = dashboardViewModel?.dashboardDataModelArray[indexPath.row] else {
+            return cellDashboard
+        }
+        
+        cellDashboard.displayData(dashboardModel: dashboardModel)
+        cellDashboard.selectButton.tag = indexPath.row
+        cellDashboard.selectButton.addTarget(self, action: #selector(selectButtonActionFromCell), for: .touchUpInside)
+        return cellDashboard
     }
 
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let newsViewModelObject = dashboardViewModel else {
+            return
+        }
+        if indexPath.section == 1 && indexPath.row > 0 && (indexPath.row + 1) % (10 * (newsViewModelObject.pageNo - 1)) == 0 {
+            newsListApiCall()
+        }
+    }
 }
 
 // MARK: - UITableViewDelegate

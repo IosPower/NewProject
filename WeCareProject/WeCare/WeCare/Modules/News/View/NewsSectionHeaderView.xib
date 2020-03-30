@@ -41,6 +41,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="newsSectionTitleLabel" destination="4c9-2q-5Rb" id="GXv-Ul-zaD"/>
+                <outlet property="sectionSeparatorLabel" destination="Z45-DB-hBw" id="NAR-pb-XAg"/>
             </connections>
             <point key="canvasLocation" x="131.8840579710145" y="153.01339285714286"/>
         </view>

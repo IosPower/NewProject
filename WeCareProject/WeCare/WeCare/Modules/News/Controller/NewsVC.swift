@@ -12,6 +12,13 @@ class NewsVC: UIViewController {
 
     @IBOutlet weak var newsTableView: UITableView!
     
+    var sideMenuSectionScreen = SideMenuSectionScreen.news
+    ///
+    @IBOutlet weak var screenHeaderImgView: UIImageView!
+    ///
+    @IBOutlet weak var headerView: UIView!
+    ///
+    @IBOutlet weak var screenTitleLabel: UILabel!
     ///
     var newsViewModel: NewsViewModel?
     ///
@@ -20,10 +27,42 @@ class NewsVC: UIViewController {
     @IBOutlet weak var categorySecondButton: UIButton!
     ///
     @IBOutlet weak var categoryDropDownImageView: UIImageView!
+    ///
+    @IBOutlet weak var bottomCategoryView: UIView!
+    ///
+    @IBOutlet weak var bottomFirstCategoryView: UIView!
+    ///
+    @IBOutlet weak var bottomSecondCategoryView: UIView!
+    ///
+    @IBOutlet weak var bottomCategoryViewBottomConstraint: NSLayoutConstraint!
+    
+    ///
+    var bottomCategoryViewBgColor = UIColor.white
+    ///
+    var bottomFirstCategoryViewBgColor = UIColor.white
+    ///
+    var bottomSecondCategoryViewBgColor = UIColor.white
+    ///
+    var isCategoryAvailable = false
+    ///
+    var bottomCategoryViewHeight = 40
+    ///
+    var sideMenuStatusBarColor: UIColor = .white
+    ///
+    var recentCellBgColor = UIColor.white
+    ///
+    var categoryImage: UIImage?
+    ///
+    var headerAndSeparatorViewBGColor = UIColor.clear
+    ///
+    var separatorLabelBgColor = UIColor.clear
+    ///
+    var selectionViewBorderColor = UIColor.clear
     
     override func viewDidLoad() {
         super.viewDidLoad()
         newsViewModel = NewsViewModel(vc: self)
+        newsViewModel?.sideMenuSectionScreen = sideMenuSectionScreen
         newsTableView.estimatedRowHeight = 162
         newsTableView.rowHeight = UITableView.automaticDimension
         setupView()
@@ -31,11 +70,51 @@ class NewsVC: UIViewController {
     }
     
     func setupView() {
+        var imgName = ""
+        var headerViewColor = UIColor.clear
+        switch sideMenuSectionScreen {
+        case .news:
+            imgName = "icn_menu_news"
+            headerViewColor = .lightGreen
+            bottomCategoryView.backgroundColor = .newsRecentMessagesBackgroundColor
+            bottomFirstCategoryView.backgroundColor = .newsTakingCareCategoryBackgroundColor
+            bottomSecondCategoryView.backgroundColor = .newsVaillantGroupCategoryBackgroundColor
+            bottomCategoryView.isHidden = false
+            bottomCategoryViewBottomConstraint.constant = 79
+        case .event:
+            imgName = "icn_menu_event"
+            headerViewColor = .saffron
+            bottomCategoryView.backgroundColor = .eventsRecentMessagesBackgroundColor
+            bottomFirstCategoryView.backgroundColor = .eventsKlantenCategoryBackgroundColor
+            bottomSecondCategoryView.backgroundColor = .eventsPersonelCategoryBackgroundColor
+            bottomCategoryView.isHidden = false
+            bottomCategoryViewBottomConstraint.constant = 79
+        case .survey:
+            imgName = "icn_menu_inquiries"
+            headerViewColor = .steelBlue
+            bottomCategoryView.isHidden = true
+            bottomCategoryViewBottomConstraint.constant = 40
+        }
+        
+        // set screen title name
+        screenTitleLabel.text = sideMenuSectionScreen.rawValue
+        screenHeaderImgView.image = UIImage(named: imgName)
+        headerView.backgroundColor = headerViewColor
+        
         categoryDropDownImageView.isHidden = true
     }
     
     @IBAction func menuButtonAction(_ sender: UIButton) {
-        CommonMethods.openSideMenu(sender: sender, vc: self, sideMenuStatusBarColor: .lightGreen)
+        var sideMenuStatusBarColor = UIColor.white
+        switch sideMenuSectionScreen {
+        case .news:
+            sideMenuStatusBarColor = .lightGreen
+        case .event:
+            sideMenuStatusBarColor = .saffron
+        case .survey:
+            sideMenuStatusBarColor = .steelBlue
+        }
+        CommonMethods.openSideMenu(sender: sender, vc: self, sideMenuStatusBarColor: sideMenuStatusBarColor)
     }
     
     @objc func selectButtonActionFromCell() {
@@ -79,7 +158,34 @@ class NewsVC: UIViewController {
                  categoryDropDownImageView.isHidden = false
             }
         }
-
+    }
+    
+    func getDataModelAndCellBGColorAndSeparatorColorAndCategoryImage(indexPath: IndexPath) -> (newsObject: NewsDataModel?, cellBgColor: UIColor, separatorViewBgColor: UIColor) {
+        var newsObject: NewsDataModel?
+        var cellBgColor = UIColor.white
+        var separatorViewBgColor = UIColor.clear
+        switch indexPath.section {
+        case 0:
+            switch sideMenuSectionScreen {
+            case .news:
+                cellBgColor = .newsRecentMessagesBackgroundColor
+                separatorViewBgColor = .lightGreen
+            case .event:
+                cellBgColor = .eventsRecentMessagesBackgroundColor
+                separatorViewBgColor = .saffron
+            case .survey:
+                cellBgColor = .surveyRecentBackgroundColor
+                separatorViewBgColor = .steelBlue
+            }
+            newsObject = newsViewModel?.newsRecentMessagesModelArray[indexPath.row]
+            let latArrayIndex = (newsViewModel?.newsRecentMessagesModelArray.count ?? 0) - 1
+            separatorViewBgColor = latArrayIndex == indexPath.row ? separatorViewBgColor : .clear
+        case 1:
+            newsObject = newsViewModel?.newDataArray[indexPath.row]
+        default:
+            break
+        }
+        return (newsObject, cellBgColor, separatorViewBgColor)
     }
 }
 // MARK: - UITableViewDataSource
@@ -97,7 +203,7 @@ extension NewsVC: UITableViewDataSource {
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return newsViewModel?.sectionHeaderArray().count ?? 0
     }
     
     ///
@@ -105,33 +211,16 @@ extension NewsVC: UITableViewDataSource {
         guard let cellNewsList = tableView.dequeueReusableCell(withIdentifier: "NewsTableViewCell") as? NewsTableViewCell else {
             fatalError("Cell not exists in storyboard")
         }
-        var newsObject: NewsDataModel?
-        switch indexPath.section {
-        case 0:
-            cellNewsList.backgroundColor = .newsRecentMessagesBackgroundColor
-            cellNewsList.categoryView.backgroundColor = .newsRecentMessagesCategoryBackgroundColor
-            newsObject = newsViewModel?.newsRecentMessagesModelArray[indexPath.row]
-            
-            let latArrayIndex = (newsViewModel?.newsRecentMessagesModelArray.count ?? 0) - 1
-            cellNewsList.separatorView.backgroundColor = latArrayIndex == indexPath.row ? UIColor.lightGreen : .clear
-        case 1:
-            cellNewsList.backgroundColor = .white
-            cellNewsList.categoryView.backgroundColor = .lightGreen
-            cellNewsList.separatorView.backgroundColor = .clear
-            newsObject = newsViewModel?.newDataArray[indexPath.row]
-        default:
-            break
-        }
-        cellNewsList.newSelectionView.layer.borderColor = UIColor.newsRecentMessagesBackgroundColor.cgColor
-        cellNewsList.newSelectionView.layer.borderWidth = 1.5
+        cellNewsList.sideMenuSectionScreen = sideMenuSectionScreen
+        
+        let tupleValues = getDataModelAndCellBGColorAndSeparatorColorAndCategoryImage(indexPath: indexPath)
+        
+        cellNewsList.setupCell(cellBgColor: tupleValues.cellBgColor, separatorViewBgColor: tupleValues.separatorViewBgColor)
+        
         cellNewsList.selectButton.tag = indexPath.row
         cellNewsList.selectButton.addTarget(self, action: #selector(selectButtonActionFromCell), for: .touchUpInside)
         
-        guard let newsObjectModel = newsObject else {
-            cellNewsList.displayData(date: "", title: "", description: "", imgPath: nil, typeImgName: "icn_menu_news", categoryName: "", index: indexPath.row)
-            return cellNewsList
-        }
-        cellNewsList.displayData(date: newsObjectModel.created_at, title: newsObjectModel.title, description: newsObjectModel.short_description, imgPath: newsObjectModel.image, typeImgName: "icn_menu_news", categoryName: newsObjectModel.category, index: indexPath.row)
+        cellNewsList.displayData(modelObject: tupleValues.newsObject, index: indexPath.row)
         return cellNewsList
     }
 
@@ -155,19 +244,19 @@ extension NewsVC: UITableViewDelegate {
     ///
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let headerMenu = Bundle.main.loadNibNamed(R.nib.newsSectionHeaderView.name, owner: self, options: nil)?[0] as? NewsSectionHeaderView else { return NewsSectionHeaderView() }
-        
-        var sectionTitle = ""
-        switch section {
-        case 0:
-            headerMenu.backgroundColor = .newsRecentMessagesBackgroundColor
-            sectionTitle = "VERS VAN DE PERS"
-        case 1:
-            headerMenu.backgroundColor = .white
-            sectionTitle = "ALLE BERICHTEN"
-        default:
-            break
+      
+        switch sideMenuSectionScreen {
+        case .news:
+            headerMenu.sectionSeparatorLabel.backgroundColor = .newsSeparatorLabelBackgroundColor
+            headerMenu.backgroundColor = section == 0 ? .newsRecentMessagesBackgroundColor: .white
+        case .event:
+            headerMenu.sectionSeparatorLabel.backgroundColor = .eventsSeparatorLabelBackgroundColor
+            headerMenu.backgroundColor = section == 0 ? .eventsRecentMessagesBackgroundColor: .white
+        case .survey:
+            headerMenu.sectionSeparatorLabel.backgroundColor = .surveySeparatorLabelBackgroundColor
+            headerMenu.backgroundColor = section == 0 ? UIColor.surveyRecentBackgroundColor: .white
         }
-        headerMenu.newsSectionTitleLabel.text = sectionTitle
+        headerMenu.newsSectionTitleLabel.text = newsViewModel?.sectionHeaderArray()[section] ?? ""
         return headerMenu
     }
     
