@@ -11,6 +11,11 @@ import UIKit
 class Constants: NSObject {
     
     // MARK: - AppDel Shared Object
+    
+    ///
+    static let screenWidth = UIScreen.main.bounds.size.width
+    ///
+    static let screenHeight = UIScreen.main.bounds.size.height
     ///
     static var AppDel = UIApplication.shared.delegate as! AppDelegate
     ///
@@ -35,6 +40,6 @@ class Constants: NSObject {
     static let isiPhoneX: Bool = 812 == UIScreen.main.bounds.size.height ? true : false
     ///
     static let isiPhoneXR: Bool = 896 == UIScreen.main.bounds.size.height ? true : false
-   
+    
     
 }

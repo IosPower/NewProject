@@ -29,12 +29,19 @@ class UserVC: UIViewController {
         CommonMethods.openSideMenu(sender: sender, vc: self, sideMenuStatusBarColor: .grayNew)
     }
     
-    @objc func selectButtonActionFromCell() {
-           
+    @objc func selectButtonActionFromCell(sender: UIButton) {
+        if let userDetailVC = R.storyboard.user.userDetailVC(),
+            let userModelArray = userViewModel?.userModelArray, sender.tag < userModelArray.count {
+            let model = userModelArray[sender.tag]
+            userDetailVC.userModel = model
+            self.push(viewController: userDetailVC, animated: false)
+        }
     }
     
     func userListApiCall() {
+        Constants.window?.showHud()
         userViewModel?.userListAPI(success: {
+            Constants.window?.hideHud()
             self.userTableView.reloadData()
         }, failure: { [weak self] (responseDict) in
             if let message = responseDict[ModelKeys.ResponseKeys.message] as? String {

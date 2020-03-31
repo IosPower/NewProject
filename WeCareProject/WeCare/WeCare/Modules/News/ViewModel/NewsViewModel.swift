@@ -66,16 +66,21 @@ class NewsViewModel: NSObject {
     }
     
     // MARK: - API Call
-    func newsListAPI(success: @escaping () -> Void, failure: @escaping (_ errorResponse: [String: Any]) -> Void) {
+    func newsListAPI(type: Int, isResetData: Bool, success: @escaping () -> Void, failure: @escaping (_ errorResponse: [String: Any]) -> Void) {
+        if isResetData {
+            newsRecentMessagesModelArray = []
+            newDataArray = []
+            pageNo = 1
+        }
         
-        let param = createParameter()
+        let param = createParameter(type: type)
         
         ApiManager.sharedInstance.requestFor(urlPath: apiPath, param: param, httpMethod: .post, includeHeader: true, success: { [weak self] (response) in
             let jsonData = JSON(response)
             self?.totalCount = jsonData["total_count"].intValue
             if let status = jsonData[ModelKeys.ResponseKeys.status].int, status == 1 {
                 DispatchQueue.main.async {
-                    self?.parseResponse(jsonData: jsonData)
+                    self?.parseResponse(jsonData: jsonData, isResetData: isResetData)
                     success()
                 }
             } else {
@@ -90,26 +95,30 @@ class NewsViewModel: NSObject {
         })
     }
     
-    private func createParameter() -> [String: Any] {
+    private func createParameter(type: Int) -> [String: Any] {
         guard let sideMenuSectionScreenObject = self.sideMenuSectionScreen else {
             return [:]
         }
         if sideMenuSectionScreenObject == .survey {
             // no type parameter in survey
-            return ["language": "nl", "page_no": pageNo, "user_id": 5]
+            return ["language": "fr", "page_no": pageNo, "user_id": 5]
         } else {
-            return ["language": "nl", "page_no": pageNo, "user_id": 5, "type": 1]
+            return ["language": "fr", "page_no": pageNo, "user_id": 5, "type": type]
         }
     }
     
-    private func parseResponse(jsonData: JSON) {
+    private func parseResponse(jsonData: JSON, isResetData: Bool) {
         guard let sideMenuSectionScreenObject = self.sideMenuSectionScreen else {return}
-        pageNo += 1
         let newsArray = jsonData[ModelKeys.ResponseKeys.data].arrayValue.map {NewsDataModel(json: $0)}
-        newDataArray.append(contentsOf: newsArray)
-   
-        newsCategoryModelArray = jsonData[categoryKey].arrayValue.map {NewsCategoryModel(json: $0, sideMenuSectionScreen: sideMenuSectionScreenObject)}
-        newsRecentMessagesModelArray = jsonData[recentDataKey].arrayValue.map {NewsDataModel(json: $0)}
+        let recentArray = jsonData[recentDataKey].arrayValue.map {NewsDataModel(json: $0)}
+        if newsArray.count > 0 {
+            pageNo += 1
+            newDataArray.append(contentsOf: newsArray)
+        }
+        newsRecentMessagesModelArray = recentArray
+        if isResetData == false {
+            newsCategoryModelArray = jsonData[categoryKey].arrayValue.map {NewsCategoryModel(json: $0, sideMenuSectionScreen: sideMenuSectionScreenObject)}
+        }
     }
     
     func sectionHeaderArray() -> [String] {

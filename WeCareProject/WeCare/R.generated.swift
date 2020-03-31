@@ -201,7 +201,7 @@ struct R: Rswift.Validatable {
     fileprivate init() {}
   }
 
-  /// This `R.image` struct is generated, and contains static references to 17 images.
+  /// This `R.image` struct is generated, and contains static references to 18 images.
   struct image {
     /// Image `downloadnature`.
     static let downloadnature = Rswift.ImageResource(bundle: R.hostingBundle, name: "downloadnature")
@@ -211,6 +211,8 @@ struct R: Rswift.Validatable {
     static let icn_Link_news = Rswift.ImageResource(bundle: R.hostingBundle, name: "icn_Link_news")
     /// Image `icn_arrow`.
     static let icn_arrow = Rswift.ImageResource(bundle: R.hostingBundle, name: "icn_arrow")
+    /// Image `icn_backarrow`.
+    static let icn_backarrow = Rswift.ImageResource(bundle: R.hostingBundle, name: "icn_backarrow")
     /// Image `icn_downarrow`.
     static let icn_downarrow = Rswift.ImageResource(bundle: R.hostingBundle, name: "icn_downarrow")
     /// Image `icn_link_event`.
@@ -263,6 +265,13 @@ struct R: Rswift.Validatable {
     /// `UIImage(named: "icn_arrow", bundle: ..., traitCollection: ...)`
     static func icn_arrow(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.icn_arrow, compatibleWith: traitCollection)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UIImage(named: "icn_backarrow", bundle: ..., traitCollection: ...)`
+    static func icn_backarrow(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
+      return UIKit.UIImage(resource: R.image.icn_backarrow, compatibleWith: traitCollection)
     }
     #endif
 
@@ -360,7 +369,7 @@ struct R: Rswift.Validatable {
     fileprivate init() {}
   }
 
-  /// This `R.nib` struct is generated, and contains static references to 3 nibs.
+  /// This `R.nib` struct is generated, and contains static references to 5 nibs.
   struct nib {
     /// Nib `NewsSectionHeaderView`.
     static let newsSectionHeaderView = _R.nib._NewsSectionHeaderView()
@@ -368,6 +377,10 @@ struct R: Rswift.Validatable {
     static let sideMenuSectionHeader = _R.nib._SideMenuSectionHeader()
     /// Nib `SideMenuTableViewCell`.
     static let sideMenuTableViewCell = _R.nib._SideMenuTableViewCell()
+    /// Nib `SubCategoryTableViewCell`.
+    static let subCategoryTableViewCell = _R.nib._SubCategoryTableViewCell()
+    /// Nib `SubCategoryView`.
+    static let subCategoryView = _R.nib._SubCategoryView()
 
     #if os(iOS) || os(tvOS)
     /// `UINib(name: "NewsSectionHeaderView", in: bundle)`
@@ -393,6 +406,22 @@ struct R: Rswift.Validatable {
     }
     #endif
 
+    #if os(iOS) || os(tvOS)
+    /// `UINib(name: "SubCategoryTableViewCell", in: bundle)`
+    @available(*, deprecated, message: "Use UINib(resource: R.nib.subCategoryTableViewCell) instead")
+    static func subCategoryTableViewCell(_: Void = ()) -> UIKit.UINib {
+      return UIKit.UINib(resource: R.nib.subCategoryTableViewCell)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UINib(name: "SubCategoryView", in: bundle)`
+    @available(*, deprecated, message: "Use UINib(resource: R.nib.subCategoryView) instead")
+    static func subCategoryView(_: Void = ()) -> UIKit.UINib {
+      return UIKit.UINib(resource: R.nib.subCategoryView)
+    }
+    #endif
+
     static func newsSectionHeaderView(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> NewsSectionHeaderView? {
       return R.nib.newsSectionHeaderView.instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? NewsSectionHeaderView
     }
@@ -405,10 +434,18 @@ struct R: Rswift.Validatable {
       return R.nib.sideMenuTableViewCell.instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? SideMenuTableViewCell
     }
 
+    static func subCategoryTableViewCell(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> SubCategoryTableViewCell? {
+      return R.nib.subCategoryTableViewCell.instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? SubCategoryTableViewCell
+    }
+
+    static func subCategoryView(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> SubCategoryView? {
+      return R.nib.subCategoryView.instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? SubCategoryView
+    }
+
     fileprivate init() {}
   }
 
-  /// This `R.reuseIdentifier` struct is generated, and contains static references to 4 reuse identifiers.
+  /// This `R.reuseIdentifier` struct is generated, and contains static references to 5 reuse identifiers.
   struct reuseIdentifier {
     /// Reuse identifier `DashboardTableViewCell`.
     static let dashboardTableViewCell: Rswift.ReuseIdentifier<DashboardTableViewCell> = Rswift.ReuseIdentifier(identifier: "DashboardTableViewCell")
@@ -416,6 +453,8 @@ struct R: Rswift.Validatable {
     static let newsTableViewCell: Rswift.ReuseIdentifier<NewsTableViewCell> = Rswift.ReuseIdentifier(identifier: "NewsTableViewCell")
     /// Reuse identifier `SideMenuTableViewCell`.
     static let sideMenuTableViewCell: Rswift.ReuseIdentifier<SideMenuTableViewCell> = Rswift.ReuseIdentifier(identifier: "SideMenuTableViewCell")
+    /// Reuse identifier `SubCategoryTableViewCell`.
+    static let subCategoryTableViewCell: Rswift.ReuseIdentifier<SubCategoryTableViewCell> = Rswift.ReuseIdentifier(identifier: "SubCategoryTableViewCell")
     /// Reuse identifier `UserTableViewCell`.
     static let userTableViewCell: Rswift.ReuseIdentifier<UserTableViewCell> = Rswift.ReuseIdentifier(identifier: "UserTableViewCell")
 
@@ -498,6 +537,31 @@ struct _R: Rswift.Validatable {
         if #available(iOS 11.0, tvOS 11.0, *) {
           if UIKit.UIColor(named: "lightGreen", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Color named 'lightGreen' is used in storyboard 'SideMenuTableViewCell', but couldn't be loaded.") }
         }
+      }
+
+      fileprivate init() {}
+    }
+
+    struct _SubCategoryTableViewCell: Rswift.NibResourceType, Rswift.ReuseIdentifierType {
+      typealias ReusableType = SubCategoryTableViewCell
+
+      let bundle = R.hostingBundle
+      let identifier = "SubCategoryTableViewCell"
+      let name = "SubCategoryTableViewCell"
+
+      func firstView(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> SubCategoryTableViewCell? {
+        return instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? SubCategoryTableViewCell
+      }
+
+      fileprivate init() {}
+    }
+
+    struct _SubCategoryView: Rswift.NibResourceType {
+      let bundle = R.hostingBundle
+      let name = "SubCategoryView"
+
+      func firstView(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> SubCategoryView? {
+        return instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? SubCategoryView
       }
 
       fileprivate init() {}
@@ -654,19 +718,26 @@ struct _R: Rswift.Validatable {
     struct user: Rswift.StoryboardResourceType, Rswift.Validatable {
       let bundle = R.hostingBundle
       let name = "User"
+      let userDetailVC = StoryboardViewControllerResource<UserDetailVC>(identifier: "UserDetailVC")
       let userVC = StoryboardViewControllerResource<UserVC>(identifier: "UserVC")
+
+      func userDetailVC(_: Void = ()) -> UserDetailVC? {
+        return UIKit.UIStoryboard(resource: self).instantiateViewController(withResource: userDetailVC)
+      }
 
       func userVC(_: Void = ()) -> UserVC? {
         return UIKit.UIStoryboard(resource: self).instantiateViewController(withResource: userVC)
       }
 
       static func validate() throws {
+        if UIKit.UIImage(named: "icn_backarrow", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'icn_backarrow' is used in storyboard 'User', but couldn't be loaded.") }
         if UIKit.UIImage(named: "icn_linkarrow", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'icn_linkarrow' is used in storyboard 'User', but couldn't be loaded.") }
         if UIKit.UIImage(named: "icn_menu", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'icn_menu' is used in storyboard 'User', but couldn't be loaded.") }
         if UIKit.UIImage(named: "icn_menu_whoiswho", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'icn_menu_whoiswho' is used in storyboard 'User', but couldn't be loaded.") }
         if #available(iOS 11.0, tvOS 11.0, *) {
           if UIKit.UIColor(named: "grayNew", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Color named 'grayNew' is used in storyboard 'User', but couldn't be loaded.") }
         }
+        if _R.storyboard.user().userDetailVC() == nil { throw Rswift.ValidationError(description:"[R.swift] ViewController with identifier 'userDetailVC' could not be loaded from storyboard 'User' as 'UserDetailVC'.") }
         if _R.storyboard.user().userVC() == nil { throw Rswift.ValidationError(description:"[R.swift] ViewController with identifier 'userVC' could not be loaded from storyboard 'User' as 'UserVC'.") }
       }
 

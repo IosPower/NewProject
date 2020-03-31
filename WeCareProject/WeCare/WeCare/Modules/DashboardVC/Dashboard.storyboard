@@ -265,7 +265,7 @@
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HJ3-VA-bIO">
                                                         <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pC6-yy-cNE">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pC6-yy-cNE">
                                                                 <rect key="frame" x="7.5" y="5" width="5.5" height="10"/>
                                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="8"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -295,6 +295,9 @@
                                                     </imageView>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IQp-Cc-WBf">
                                                         <rect key="frame" x="0.0" y="0.0" width="82" height="85"/>
+                                                        <connections>
+                                                            <action selector="newsButtonAction:" destination="N6D-bf-S7A" eventType="touchUpInside" id="kNP-1T-XpC"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <color key="backgroundColor" name="lightGreen"/>
@@ -317,7 +320,7 @@
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o0h-QW-2qE">
                                                         <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ea3-5j-eAu">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ea3-5j-eAu">
                                                                 <rect key="frame" x="7.5" y="5" width="5.5" height="10"/>
                                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="8"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -347,6 +350,9 @@
                                                     </imageView>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wkz-4s-odU">
                                                         <rect key="frame" x="0.0" y="0.0" width="82" height="85"/>
+                                                        <connections>
+                                                            <action selector="eventsButtonAction:" destination="N6D-bf-S7A" eventType="touchUpInside" id="Q7h-KW-Ejd"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <color key="backgroundColor" name="saffron"/>
@@ -369,7 +375,7 @@
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rf0-QL-3mW">
                                                         <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zSu-qo-MmL">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zSu-qo-MmL">
                                                                 <rect key="frame" x="7.5" y="5" width="5.5" height="10"/>
                                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="8"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -399,6 +405,9 @@
                                                     </imageView>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hb8-SP-jQi">
                                                         <rect key="frame" x="0.0" y="0.0" width="82" height="85"/>
+                                                        <connections>
+                                                            <action selector="surveyButtonAction:" destination="N6D-bf-S7A" eventType="touchUpInside" id="kXb-dY-5Cn"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <color key="backgroundColor" name="steelBlue"/>
@@ -433,6 +442,9 @@
                                                     </imageView>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dvx-Eu-xCC">
                                                         <rect key="frame" x="0.0" y="0.0" width="82" height="85"/>
+                                                        <connections>
+                                                            <action selector="userButtonAction:" destination="N6D-bf-S7A" eventType="touchUpInside" id="hqR-cQ-GDl"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <color key="backgroundColor" name="grayNew"/>

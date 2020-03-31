@@ -35,7 +35,12 @@ class NewsVC: UIViewController {
     @IBOutlet weak var bottomSecondCategoryView: UIView!
     ///
     @IBOutlet weak var bottomCategoryViewBottomConstraint: NSLayoutConstraint!
+    ///
+    var typeValue = 1
+    ///
+    var subCategoryView: SubCategoryView?
     
+    //-------------
     ///
     var bottomCategoryViewBgColor = UIColor.white
     ///
@@ -58,6 +63,7 @@ class NewsVC: UIViewController {
     var separatorLabelBgColor = UIColor.clear
     ///
     var selectionViewBorderColor = UIColor.clear
+    //-------------
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,7 +72,6 @@ class NewsVC: UIViewController {
         newsTableView.estimatedRowHeight = 162
         newsTableView.rowHeight = UITableView.automaticDimension
         setupView()
-        newsListApiCall()
     }
     
     func setupView() {
@@ -74,6 +79,7 @@ class NewsVC: UIViewController {
         var headerViewColor = UIColor.clear
         switch sideMenuSectionScreen {
         case .news:
+            typeValue = 1
             imgName = "icn_menu_news"
             headerViewColor = .lightGreen
             bottomCategoryView.backgroundColor = .newsRecentMessagesBackgroundColor
@@ -82,6 +88,7 @@ class NewsVC: UIViewController {
             bottomCategoryView.isHidden = false
             bottomCategoryViewBottomConstraint.constant = 79
         case .event:
+            typeValue = 1
             imgName = "icn_menu_event"
             headerViewColor = .saffron
             bottomCategoryView.backgroundColor = .eventsRecentMessagesBackgroundColor
@@ -90,12 +97,13 @@ class NewsVC: UIViewController {
             bottomCategoryView.isHidden = false
             bottomCategoryViewBottomConstraint.constant = 79
         case .survey:
+            typeValue = 0
             imgName = "icn_menu_inquiries"
             headerViewColor = .steelBlue
             bottomCategoryView.isHidden = true
             bottomCategoryViewBottomConstraint.constant = 40
         }
-        
+        newsListApiCall(type: typeValue, isResetData: false)
         // set screen title name
         screenTitleLabel.text = sideMenuSectionScreen.rawValue
         screenHeaderImgView.image = UIImage(named: imgName)
@@ -122,19 +130,47 @@ class NewsVC: UIViewController {
     }
     
     @IBAction func categoryFirstButtonAction(_ sender: Any) {
-        
+        typeValue = 1
+        newsListApiCall(type: typeValue, isResetData: true)
     }
     
     @IBAction func categorySecondButtonAction(_ sender: Any) {
-        
+        guard let categoryArray = newsViewModel?.newsCategoryModelArray, categoryArray.count > 1  else {
+            return
+        }
+        if (newsViewModel?.newsCategoryModelArray ?? []).count > 1 {
+            var color = UIColor.black
+            switch sideMenuSectionScreen {
+            case .news:
+                color = .lightGreen
+            case .event:
+                color = .saffron
+            case .survey:
+                color = .steelBlue
+            }
+            
+            if let viewNew = Bundle.main.loadNibNamed("SubCategoryView", owner: self, options: nil)?[0] as? SubCategoryView {
+                viewNew.frame = CGRect(x: 0, y: 0, width: Constants.screenWidth, height: Constants.screenHeight)
+                viewNew.delegate = self
+                viewNew.categoryTitleLabel.text = categoryArray[1].message_category_name.capitalized
+                viewNew.subCategoryArray = categoryArray[1].newsSubCategoryModelArray
+                viewNew.setupView()
+                viewNew.viewListHeader.backgroundColor = color
+                
+                subCategoryView = viewNew
+                
+                self.view.addSubview(viewNew)
+                self.view.bringSubviewToFront(viewNew)
+            }
+        }
     }
     
-    func newsListApiCall() {
+    func newsListApiCall(type: Int, isResetData: Bool) {
 //        if newsViewModel?.newDataArray.count == 0 {
 //
 //        }
         Constants.window?.showHud()
-        newsViewModel?.newsListAPI(success: {
+        newsViewModel?.newsListAPI(type: type, isResetData: isResetData, success: {
             Constants.window?.hideHud()
             self.displayCategoryData()
             self.newsTableView.reloadData()
@@ -229,7 +265,7 @@ extension NewsVC: UITableViewDataSource {
               return
           }
           if indexPath.section == 1 && indexPath.row > 0 && (indexPath.row + 1) % (10 * (newsViewModelObject.pageNo - 1)) == 0 {
-              newsListApiCall()
+            newsListApiCall(type: typeValue, isResetData: false)
           }
       }
 }
@@ -263,5 +299,12 @@ extension NewsVC: UITableViewDelegate {
     ///
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 45
+    }
+}
+extension NewsVC: SubCategorySelectionProtocol {
+    func selectSubCatgory(selectedName: String) {
+        subCategoryView?.removeFromSuperview()
+        typeValue = 2
+        newsListApiCall(type: typeValue, isResetData: true)
     }
 }

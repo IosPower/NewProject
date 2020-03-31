@@ -85,8 +85,8 @@ extension UIViewController {
         if let navController = selfNavigationController {
             print(navController.viewControllers)
             DispatchQueue.main.async {
-                self.push_POP_to_ViewController(nav: navController, destinationVC: viewController, isAnimated: animated)
-                //navController.pushViewController(viewController, animated: animated)
+                //self.push_POP_to_ViewController(nav: navController, destinationVC: viewController, isAnimated: animated)
+                navController.pushViewController(viewController, animated: animated)
             }
             return true
         } else {
