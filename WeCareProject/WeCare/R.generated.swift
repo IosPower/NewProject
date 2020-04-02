@@ -667,8 +667,13 @@ struct _R: Rswift.Validatable {
     #if os(iOS) || os(tvOS)
     struct news: Rswift.StoryboardResourceType, Rswift.Validatable {
       let bundle = R.hostingBundle
+      let eventDetailVC = StoryboardViewControllerResource<EventDetailVC>(identifier: "EventDetailVC")
       let name = "News"
       let newsVC = StoryboardViewControllerResource<NewsVC>(identifier: "NewsVC")
+
+      func eventDetailVC(_: Void = ()) -> EventDetailVC? {
+        return UIKit.UIStoryboard(resource: self).instantiateViewController(withResource: eventDetailVC)
+      }
 
       func newsVC(_: Void = ()) -> NewsVC? {
         return UIKit.UIStoryboard(resource: self).instantiateViewController(withResource: newsVC)
@@ -676,12 +681,16 @@ struct _R: Rswift.Validatable {
 
       static func validate() throws {
         if UIKit.UIImage(named: "icn_arrow", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'icn_arrow' is used in storyboard 'News', but couldn't be loaded.") }
+        if UIKit.UIImage(named: "icn_backarrow", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'icn_backarrow' is used in storyboard 'News', but couldn't be loaded.") }
         if UIKit.UIImage(named: "icn_downarrow", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'icn_downarrow' is used in storyboard 'News', but couldn't be loaded.") }
         if UIKit.UIImage(named: "icn_menu", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'icn_menu' is used in storyboard 'News', but couldn't be loaded.") }
+        if UIKit.UIImage(named: "icn_menu_event", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'icn_menu_event' is used in storyboard 'News', but couldn't be loaded.") }
         if UIKit.UIImage(named: "icn_menu_news", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'icn_menu_news' is used in storyboard 'News', but couldn't be loaded.") }
         if #available(iOS 11.0, tvOS 11.0, *) {
           if UIKit.UIColor(named: "lightGreen", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Color named 'lightGreen' is used in storyboard 'News', but couldn't be loaded.") }
+          if UIKit.UIColor(named: "saffron", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Color named 'saffron' is used in storyboard 'News', but couldn't be loaded.") }
         }
+        if _R.storyboard.news().eventDetailVC() == nil { throw Rswift.ValidationError(description:"[R.swift] ViewController with identifier 'eventDetailVC' could not be loaded from storyboard 'News' as 'EventDetailVC'.") }
         if _R.storyboard.news().newsVC() == nil { throw Rswift.ValidationError(description:"[R.swift] ViewController with identifier 'newsVC' could not be loaded from storyboard 'News' as 'NewsVC'.") }
       }
 

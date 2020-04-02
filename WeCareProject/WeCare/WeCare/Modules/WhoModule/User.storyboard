@@ -267,10 +267,13 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KfB-r5-XeZ">
-                                        <rect key="frame" x="15" y="125" width="384" height="362"/>
+                                        <rect key="frame" x="15" y="125" width="384" height="350"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oR5-6N-tJj">
-                                                <rect key="frame" x="0.0" y="0.0" width="384" height="362"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="384" height="350"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="350" id="Cbh-ol-NBC"/>
+                                                </constraints>
                                             </imageView>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -282,7 +285,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2vP-xQ-DNL">
-                                        <rect key="frame" x="15" y="487" width="384" height="258.5"/>
+                                        <rect key="frame" x="15" y="475" width="384" height="258.5"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0tb-dP-4ve">
                                                 <rect key="frame" x="0.0" y="0.0" width="143.5" height="258.5"/>
@@ -305,7 +308,7 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f2x-Dt-MEq">
-                                                        <rect key="frame" x="0.0" y="52" width="143.5" height="50.5"/>
+                                                        <rect key="frame" x="0.0" y="52" width="143.5" height="50"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="E-mail adres'" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7vf-mh-sph">
                                                                 <rect key="frame" x="10" y="15" width="123.5" height="20"/>
@@ -320,10 +323,10 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4ej-6n-CLJ">
-                                                        <rect key="frame" x="0.0" y="104.5" width="143.5" height="50"/>
+                                                        <rect key="frame" x="0.0" y="104" width="143.5" height="50.5"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Telephone" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Ec-fg-kJ4">
-                                                                <rect key="frame" x="10" y="15" width="123.5" height="20"/>
+                                                                <rect key="frame" x="10" y="15.5" width="123.5" height="20"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
@@ -420,7 +423,7 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N9k-zS-QuQ">
-                                                        <rect key="frame" x="0.0" y="52" width="238.5" height="50.5"/>
+                                                        <rect key="frame" x="0.0" y="52" width="238.5" height="50"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="E-mail adres'" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Bi-HU-Ffj">
                                                                 <rect key="frame" x="10" y="15" width="218.5" height="20"/>
@@ -435,10 +438,10 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8An-gk-Ofi">
-                                                        <rect key="frame" x="0.0" y="104.5" width="238.5" height="50"/>
+                                                        <rect key="frame" x="0.0" y="104" width="238.5" height="50.5"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Telephone" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rVF-1t-PGa">
-                                                                <rect key="frame" x="10" y="15" width="218.5" height="20"/>
+                                                                <rect key="frame" x="10" y="15.5" width="218.5" height="20"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
@@ -542,7 +545,6 @@
                                     <constraint firstItem="2vP-xQ-DNL" firstAttribute="leading" secondItem="KfB-r5-XeZ" secondAttribute="leading" id="b6e-v4-beU"/>
                                     <constraint firstItem="X4U-iO-Tv1" firstAttribute="leading" secondItem="yle-NB-Kty" secondAttribute="leading" id="caM-I5-uiO"/>
                                     <constraint firstAttribute="trailing" secondItem="KfB-r5-XeZ" secondAttribute="trailing" constant="15" id="wTz-CZ-tET"/>
-                                    <constraint firstItem="KfB-r5-XeZ" firstAttribute="height" secondItem="yle-NB-Kty" secondAttribute="height" multiplier="0.42" id="z0e-LK-Q3A"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -566,6 +568,7 @@
                         <outlet property="nameLabel" destination="Ejf-2V-kR9" id="rrS-9T-3hy"/>
                         <outlet property="telephoneDetailLabel" destination="rVF-1t-PGa" id="vku-U1-WcB"/>
                         <outlet property="telephoneLabel" destination="8Ec-fg-kJ4" id="aPq-cI-mnO"/>
+                        <outlet property="userImageHeightConstraint" destination="Cbh-ol-NBC" id="08W-lx-VfV"/>
                         <outlet property="userImgView" destination="oR5-6N-tJj" id="Vt3-5w-PxZ"/>
                     </connections>
                 </viewController>

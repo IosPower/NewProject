@@ -101,9 +101,9 @@ class NewsViewModel: NSObject {
         }
         if sideMenuSectionScreenObject == .survey {
             // no type parameter in survey
-            return ["language": "fr", "page_no": pageNo, "user_id": 5]
+            return ["language": "nl", "page_no": pageNo, "user_id": 5]
         } else {
-            return ["language": "fr", "page_no": pageNo, "user_id": 5, "type": type]
+            return ["language": "nl", "page_no": pageNo, "user_id": 5, "type": type]
         }
     }
     

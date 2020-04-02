@@ -33,8 +33,15 @@ class UserDetailVC: UIViewController {
     @IBOutlet weak var mobileDetailLabel: UILabel!
     ///
     @IBOutlet weak var departmentDetailLabel: UILabel!
-   
+    ///
+    @IBOutlet weak var userImageHeightConstraint: NSLayoutConstraint!
+    
     var userModel: UserModel?
+    
+    ///
+    let closeValue: CGFloat = 0
+    ///
+    let openValue: CGFloat = 360
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,24 +62,31 @@ class UserDetailVC: UIViewController {
     }
     
     private func getNewsImage(newsImagePath: String?) {
-        guard let imagePath = newsImagePath?.replacingOccurrences(of: " ", with: "%20") else {
-            return userImgView.image = nil
-        }
-        if let urlImage = URL(string: imagePath) {
-            KingfisherManager.shared.retrieveImage(with: urlImage, options: nil, progressBlock: nil) { [weak self] result in
-                switch result {
-                case .success(let value):
-                    self?.userImgView.image = value.image
-                case .failure(let error):
-                    self?.userImgView.image = nil
-                    print("Error: \(error)")
-                }
-            }
-        } else {
-            userImgView.image = nil
-        }
-    }
-
+           guard let imagePath = newsImagePath?.replacingOccurrences(of: " ", with: "%20") else {
+               userImageHeightConstraint.constant = closeValue
+               return userImgView.image = nil
+           }
+           if let urlImage = URL(string: imagePath) {
+               KingfisherManager.shared.retrieveImage(with: urlImage, options: nil, progressBlock: nil) { [weak self] result in
+                   switch result {
+                   case .success(let value):
+                       self?.setNewImage(newsImage: value.image)
+                   case .failure(let error):
+                       self?.setNewImage(newsImage: nil)
+                       print("Error: \(error)")
+                   }
+               }
+           } else {
+               setNewImage(newsImage: nil)
+           }
+       }
+       
+       private  func setNewImage(newsImage: UIImage?) {
+           userImgView.image = newsImage
+           userImageHeightConstraint.constant = newsImage == nil ? closeValue : openValue
+       }
+       
+    
     @IBAction func backButtonAction(_ sender: Any) {
         navigationController?.popViewController(animated: true)
     }

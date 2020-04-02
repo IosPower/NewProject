@@ -40,31 +40,6 @@ class NewsVC: UIViewController {
     ///
     var subCategoryView: SubCategoryView?
     
-    //-------------
-    ///
-    var bottomCategoryViewBgColor = UIColor.white
-    ///
-    var bottomFirstCategoryViewBgColor = UIColor.white
-    ///
-    var bottomSecondCategoryViewBgColor = UIColor.white
-    ///
-    var isCategoryAvailable = false
-    ///
-    var bottomCategoryViewHeight = 40
-    ///
-    var sideMenuStatusBarColor: UIColor = .white
-    ///
-    var recentCellBgColor = UIColor.white
-    ///
-    var categoryImage: UIImage?
-    ///
-    var headerAndSeparatorViewBGColor = UIColor.clear
-    ///
-    var separatorLabelBgColor = UIColor.clear
-    ///
-    var selectionViewBorderColor = UIColor.clear
-    //-------------
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         newsViewModel = NewsViewModel(vc: self)
@@ -125,8 +100,33 @@ class NewsVC: UIViewController {
         CommonMethods.openSideMenu(sender: sender, vc: self, sideMenuStatusBarColor: sideMenuStatusBarColor)
     }
     
-    @objc func selectButtonActionFromCell() {
+    @objc func selectButtonActionFromCell(sender: UIButton) {
+        let buttonPosition = sender.convert(CGPoint.zero, to:  newsTableView)
+        let indexPath = newsTableView.indexPathForRow(at:buttonPosition)
         
+        guard let indexPathValue = indexPath else {
+            return
+        }
+        
+        var modelObject: NewsDataModel?
+        if indexPathValue.section == 0 {
+            modelObject = newsViewModel?.newsRecentMessagesModelArray[indexPathValue.row]
+        } else {
+            modelObject = newsViewModel?.newDataArray[indexPathValue.row]
+        }
+        
+        switch sideMenuSectionScreen {
+        case .news:
+            break
+        case .event:
+            if let eventDetailVC = R.storyboard.news.eventDetailVC() {
+                eventDetailVC.eventModel = modelObject
+                eventDetailVC.eventDateLocationViewBgColor = .eventsRecentMessagesBackgroundColor
+                self.push(viewController: eventDetailVC, animated: false)
+            }
+        case .survey:
+            break
+        }
     }
     
     @IBAction func categoryFirstButtonAction(_ sender: Any) {

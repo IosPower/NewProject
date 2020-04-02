@@ -36,7 +36,7 @@ class NewsDataModel: NSObject {
         type = jsonResponse["type"].intValue
         title = jsonResponse["title"].stringValue
         short_description = jsonResponse["short_description"].stringValue
-        descriptionValue = jsonResponse["descriptionValue"].stringValue
+        descriptionValue = jsonResponse["description"].stringValue
         image = jsonResponse["image"].stringValue
         url = jsonResponse["url"].stringValue
         priority = jsonResponse["priority"].stringValue
