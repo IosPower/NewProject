@@ -449,8 +449,8 @@ struct R: Rswift.Validatable {
   struct reuseIdentifier {
     /// Reuse identifier `DashboardTableViewCell`.
     static let dashboardTableViewCell: Rswift.ReuseIdentifier<DashboardTableViewCell> = Rswift.ReuseIdentifier(identifier: "DashboardTableViewCell")
-    /// Reuse identifier `NewsTableViewCell`.
-    static let newsTableViewCell: Rswift.ReuseIdentifier<NewsTableViewCell> = Rswift.ReuseIdentifier(identifier: "NewsTableViewCell")
+    /// Reuse identifier `NewsEventSurveyTableViewCell`.
+    static let newsEventSurveyTableViewCell: Rswift.ReuseIdentifier<NewsEventSurveyTableViewCell> = Rswift.ReuseIdentifier(identifier: "NewsEventSurveyTableViewCell")
     /// Reuse identifier `SideMenuTableViewCell`.
     static let sideMenuTableViewCell: Rswift.ReuseIdentifier<SideMenuTableViewCell> = Rswift.ReuseIdentifier(identifier: "SideMenuTableViewCell")
     /// Reuse identifier `SubCategoryTableViewCell`.
@@ -633,6 +633,7 @@ struct _R: Rswift.Validatable {
       let name = "LaunchScreen"
 
       static func validate() throws {
+        if UIKit.UIImage(named: "login_logo", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'login_logo' is used in storyboard 'LaunchScreen', but couldn't be loaded.") }
         if #available(iOS 11.0, tvOS 11.0, *) {
         }
       }
@@ -670,7 +671,7 @@ struct _R: Rswift.Validatable {
       let eventDetailVC = StoryboardViewControllerResource<EventDetailVC>(identifier: "EventDetailVC")
       let name = "News"
       let newsDetailVC = StoryboardViewControllerResource<NewsDetailVC>(identifier: "NewsDetailVC")
-      let newsVC = StoryboardViewControllerResource<NewsVC>(identifier: "NewsVC")
+      let newsEventSurveyVC = StoryboardViewControllerResource<NewsEventSurveyVC>(identifier: "NewsEventSurveyVC")
 
       func eventDetailVC(_: Void = ()) -> EventDetailVC? {
         return UIKit.UIStoryboard(resource: self).instantiateViewController(withResource: eventDetailVC)
@@ -680,8 +681,8 @@ struct _R: Rswift.Validatable {
         return UIKit.UIStoryboard(resource: self).instantiateViewController(withResource: newsDetailVC)
       }
 
-      func newsVC(_: Void = ()) -> NewsVC? {
-        return UIKit.UIStoryboard(resource: self).instantiateViewController(withResource: newsVC)
+      func newsEventSurveyVC(_: Void = ()) -> NewsEventSurveyVC? {
+        return UIKit.UIStoryboard(resource: self).instantiateViewController(withResource: newsEventSurveyVC)
       }
 
       static func validate() throws {
@@ -697,7 +698,7 @@ struct _R: Rswift.Validatable {
         }
         if _R.storyboard.news().eventDetailVC() == nil { throw Rswift.ValidationError(description:"[R.swift] ViewController with identifier 'eventDetailVC' could not be loaded from storyboard 'News' as 'EventDetailVC'.") }
         if _R.storyboard.news().newsDetailVC() == nil { throw Rswift.ValidationError(description:"[R.swift] ViewController with identifier 'newsDetailVC' could not be loaded from storyboard 'News' as 'NewsDetailVC'.") }
-        if _R.storyboard.news().newsVC() == nil { throw Rswift.ValidationError(description:"[R.swift] ViewController with identifier 'newsVC' could not be loaded from storyboard 'News' as 'NewsVC'.") }
+        if _R.storyboard.news().newsEventSurveyVC() == nil { throw Rswift.ValidationError(description:"[R.swift] ViewController with identifier 'newsEventSurveyVC' could not be loaded from storyboard 'News' as 'NewsEventSurveyVC'.") }
       }
 
       fileprivate init() {}

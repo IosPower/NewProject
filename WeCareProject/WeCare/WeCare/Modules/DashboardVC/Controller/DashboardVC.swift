@@ -74,23 +74,23 @@ class DashboardVC: UIViewController {
     }
     
     @IBAction func newsButtonAction(_ sender: UIButton) {
-        if let newsVC = R.storyboard.news.newsVC() {
-            newsVC.sideMenuSectionScreen = .news
-            self.push(viewController: newsVC, animated: false)
+        if let newsEventSurveyVC = R.storyboard.news.newsEventSurveyVC() {
+            newsEventSurveyVC.sideMenuSectionScreen = .news
+            self.push(viewController: newsEventSurveyVC, animated: false)
         }
     }
     
     @IBAction func eventsButtonAction(_ sender: UIButton) {
-        if let newsVC = R.storyboard.news.newsVC() {
-            newsVC.sideMenuSectionScreen = .event
-            self.push(viewController: newsVC, animated: false)
+        if let newsEventSurveyVC = R.storyboard.news.newsEventSurveyVC() {
+            newsEventSurveyVC.sideMenuSectionScreen = .event
+            self.push(viewController: newsEventSurveyVC, animated: false)
         }
     }
     
     @IBAction func surveyButtonAction(_ sender: UIButton) {
-        if let newsVC = R.storyboard.news.newsVC() {
-            newsVC.sideMenuSectionScreen = .survey
-            self.push(viewController: newsVC, animated: false)
+        if let newsEventSurveyVC = R.storyboard.news.newsEventSurveyVC() {
+            newsEventSurveyVC.sideMenuSectionScreen = .survey
+            self.push(viewController: newsEventSurveyVC, animated: false)
         }
     }
     

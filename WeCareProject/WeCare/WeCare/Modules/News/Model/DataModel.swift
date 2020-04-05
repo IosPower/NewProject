@@ -1,6 +1,6 @@
 import SwiftyJSON
 
-class NewsDataModel: NSObject {
+class DataModel: NSObject {
     
     var id = 0
     var type = 0

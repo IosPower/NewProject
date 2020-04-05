@@ -79,8 +79,8 @@ class SideMenuVC: UIViewController {
     
     ///
     @IBAction func homeButtonAction(_ sender: Any) {
-        if let newsVC = R.storyboard.dashboard.dashboardVC() {
-            self.push(viewController: newsVC, animated: false)
+        if let newsEventSurveyVC = R.storyboard.dashboard.dashboardVC() {
+            self.push(viewController: newsEventSurveyVC, animated: false)
         }
     }
     ///
@@ -114,13 +114,13 @@ class SideMenuVC: UIViewController {
         guard let indexPath = self.menuTableView.indexPathForRow(at: buttonPosition) else {return}
         
          let categoryModelArray = sideMenuViewModel.sideMenuModelArray[indexPath.section].keyData
-         let subCategoryArray = categoryModelArray[indexPath.row].newsSubCategoryModelArray
+         let subCategoryArray = categoryModelArray[indexPath.row].subCategoryModelArray
         
         switch (indexPath.section, indexPath.row) {
         case (0, 0):
-            if let newsVC = R.storyboard.news.newsVC() {
-                newsVC.sideMenuSectionScreen = .news
-                self.push(viewController: newsVC, animated: false)
+            if let newsEventSurveyVC = R.storyboard.news.newsEventSurveyVC() {
+                newsEventSurveyVC.sideMenuSectionScreen = .news
+                self.push(viewController: newsEventSurveyVC, animated: false)
             }
         case (0, 1):
             if subCategoryArray.count > 0 {
@@ -133,20 +133,20 @@ class SideMenuVC: UIViewController {
                 }
                 menuTableView.reloadData()
             } else {
-                if let newsVC = R.storyboard.news.newsVC() {
-                    newsVC.sideMenuSectionScreen = .news
-                    self.push(viewController: newsVC, animated: false)
+                if let newsEventSurveyVC = R.storyboard.news.newsEventSurveyVC() {
+                    newsEventSurveyVC.sideMenuSectionScreen = .news
+                    self.push(viewController: newsEventSurveyVC, animated: false)
                 }
             }
         case (1, 0):
-            if let newsVC = R.storyboard.news.newsVC() {
-                newsVC.sideMenuSectionScreen = .event
-                self.push(viewController: newsVC, animated: false)
+            if let newsEventSurveyVC = R.storyboard.news.newsEventSurveyVC() {
+                newsEventSurveyVC.sideMenuSectionScreen = .event
+                self.push(viewController: newsEventSurveyVC, animated: false)
             }
         case (1, 0):
-            if let newsVC = R.storyboard.news.newsVC() {
-                newsVC.sideMenuSectionScreen = .event
-                self.push(viewController: newsVC, animated: false)
+            if let newsEventSurveyVC = R.storyboard.news.newsEventSurveyVC() {
+                newsEventSurveyVC.sideMenuSectionScreen = .event
+                self.push(viewController: newsEventSurveyVC, animated: false)
             }
         default:
             break
@@ -158,16 +158,16 @@ class SideMenuVC: UIViewController {
         guard let indexPath = self.menuTableView.indexPathForRow(at: buttonPosition) else {return}
         
         let categoryModelArray = sideMenuViewModel.sideMenuModelArray[indexPath.section].keyData
-        let subCategoryArray = categoryModelArray[indexPath.row].newsSubCategoryModelArray
+        let subCategoryArray = categoryModelArray[indexPath.row].subCategoryModelArray
         
         let subCategoryName = subCategoryArray[sender.tag].message_category_name
         print("subCategoryName", subCategoryName)
         switch indexPath.section {
         case 0:
             // currenly subcategory available only in news
-            if let newsVC = R.storyboard.news.newsVC() {
-                newsVC.sideMenuSectionScreen = .news
-                self.push(viewController: newsVC, animated: false)
+            if let newsEventSurveyVC = R.storyboard.news.newsEventSurveyVC() {
+                newsEventSurveyVC.sideMenuSectionScreen = .news
+                self.push(viewController: newsEventSurveyVC, animated: false)
             }
         case 1:
             break
@@ -208,19 +208,19 @@ class SideMenuVC: UIViewController {
         } else {
             switch (section) {
             case 0:
-                if let newsVC = R.storyboard.news.newsVC() {
-                    newsVC.sideMenuSectionScreen = .news
-                    self.push(viewController: newsVC, animated: false)
+                if let newsEventSurveyVC = R.storyboard.news.newsEventSurveyVC() {
+                    newsEventSurveyVC.sideMenuSectionScreen = .news
+                    self.push(viewController: newsEventSurveyVC, animated: false)
                 }
             case 1:
-                if let newsVC = R.storyboard.news.newsVC() {
-                    newsVC.sideMenuSectionScreen = .event
-                    self.push(viewController: newsVC, animated: false)
+                if let newsEventSurveyVC = R.storyboard.news.newsEventSurveyVC() {
+                    newsEventSurveyVC.sideMenuSectionScreen = .event
+                    self.push(viewController: newsEventSurveyVC, animated: false)
                 }
             case 2:
-                if let newsVC = R.storyboard.news.newsVC() {
-                    newsVC.sideMenuSectionScreen = .survey
-                    self.push(viewController: newsVC, animated: false)
+                if let newsEventSurveyVC = R.storyboard.news.newsEventSurveyVC() {
+                    newsEventSurveyVC.sideMenuSectionScreen = .survey
+                    self.push(viewController: newsEventSurveyVC, animated: false)
                 }
             case 3:
                 if let whoVC = R.storyboard.user.userVC() {
@@ -275,7 +275,7 @@ extension SideMenuVC: UITableViewDataSource {
             fatalError("Cell not exists in storyboard")
         }
         let categoryModelArray = sideMenuViewModel.sideMenuModelArray[indexPath.section].keyData
-        let subCategoryArray = categoryModelArray[indexPath.row].newsSubCategoryModelArray
+        let subCategoryArray = categoryModelArray[indexPath.row].subCategoryModelArray
         let isExpandSubCategory = categoryModelArray[indexPath.row].isExpand
         
         var heightConstraint = CELLHEIGHT

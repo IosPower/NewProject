@@ -1,5 +1,5 @@
 //
-//  NewsTableViewCell.swift
+//  NewsEventSurveyTableViewCell.swift
 //  WeCare
 //
 //  Created by Admin on 25/03/20.
@@ -9,7 +9,7 @@
 import UIKit
 import Kingfisher
 
-class NewsTableViewCell: UITableViewCell {
+class NewsEventSurveyTableViewCell: UITableViewCell {
     
     ///
     @IBOutlet weak var dateAndCateoryLabel: UILabel!
@@ -43,9 +43,17 @@ class NewsTableViewCell: UITableViewCell {
     ///
     var sideMenuSectionScreen: SideMenuSectionScreen?
     
+    ///
     let closeValue: CGFloat = 20
+    
+    ///
     let openValue: CGFloat = 147
     
+    
+    /// setup cell
+    /// - Parameters:
+    ///   - cellBgColor: cell background color
+    ///   - separatorViewBgColor: separator color
     func setupCell(cellBgColor: UIColor, separatorViewBgColor: UIColor) {
         guard let sideMenuSectionScreenObject = sideMenuSectionScreen else {
             return
@@ -85,7 +93,11 @@ class NewsTableViewCell: UITableViewCell {
         self.backgroundColor = cellBgColor
     }
     
-    func displayData(modelObject: NewsDataModel?, index: Int) {
+    /// display data
+    /// - Parameters:
+    ///   - modelObject:DataModel  object
+    ///   - index: index in Int
+    func displayData(modelObject: DataModel?, index: Int) {
         guard let sideMenuSectionScreenObject = sideMenuSectionScreen else {
             return
         }

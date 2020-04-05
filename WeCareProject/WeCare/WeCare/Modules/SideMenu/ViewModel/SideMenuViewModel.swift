@@ -11,9 +11,9 @@ import SwiftyJSON
 class SideMenuViewModel: NSObject {
   
     ///
-    var newsCategoryModelArray : [NewsCategoryModel] = []
+    var newsCategoryModelArray : [CategoryModel] = []
     ///
-    var eventCategoryModelArray : [NewsCategoryModel] = []
+    var eventCategoryModelArray : [CategoryModel] = []
   
     ///
     var sideMenuModelArray: [SideMenuModel] = []
@@ -77,7 +77,7 @@ class SideMenuViewModel: NSObject {
             if let status = jsonData[ModelKeys.ResponseKeys.status].int, status == 1 {
                 DispatchQueue.main.async {
                     
-                    self?.newsCategoryModelArray = jsonData["messageCategory"].arrayValue.map {NewsCategoryModel(json: $0, sideMenuSectionScreen: SideMenuSectionScreen.news)}
+                    self?.newsCategoryModelArray = jsonData["messageCategory"].arrayValue.map {CategoryModel(json: $0, sideMenuSectionScreen: SideMenuSectionScreen.news)}
 
                     self?.sideMenuModelArray[0].keyData = self?.newsCategoryModelArray ?? []
                     
@@ -104,7 +104,7 @@ class SideMenuViewModel: NSObject {
             let jsonData = JSON(response)
             if let status = jsonData[ModelKeys.ResponseKeys.status].int, status == 1 {
                 DispatchQueue.main.async {
-                    self?.eventCategoryModelArray = jsonData["eventCategory"].arrayValue.map {NewsCategoryModel(json: $0, sideMenuSectionScreen: SideMenuSectionScreen.event)}
+                    self?.eventCategoryModelArray = jsonData["eventCategory"].arrayValue.map {CategoryModel(json: $0, sideMenuSectionScreen: SideMenuSectionScreen.event)}
                     
                     self?.sideMenuModelArray[1].keyData = self?.eventCategoryModelArray ?? []
                     success()

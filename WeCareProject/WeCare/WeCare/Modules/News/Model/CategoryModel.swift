@@ -1,9 +1,9 @@
 import SwiftyJSON
 
-class NewsCategoryModel: NSObject {
+class CategoryModel: NSObject {
     var id = 0
     var message_category_name = ""
-    var newsSubCategoryModelArray: [NewsSubCategoryModel] = []
+    var subCategoryModelArray: [SubCategoryModel] = []
     var isExpand = false
     // MARK: - Initialize
    
@@ -15,11 +15,11 @@ class NewsCategoryModel: NSObject {
         }
         id = jsonResponse["id"].intValue
         message_category_name = getCategoryName(jsonResponse: jsonResponse, sideMenuSectionScreen: sideMenuSectionScreen)
-        newsSubCategoryModelArray = jsonResponse["sub_category"].arrayValue.map({NewsSubCategoryModel(json: $0, sideMenuSectionScreen: sideMenuSectionScreen)})
+        subCategoryModelArray = jsonResponse["sub_category"].arrayValue.map({SubCategoryModel(json: $0, sideMenuSectionScreen: sideMenuSectionScreen)})
     }
 }
 
-class NewsSubCategoryModel: NSObject {
+class SubCategoryModel: NSObject {
     
     var id = 0
     var message_category_name = ""

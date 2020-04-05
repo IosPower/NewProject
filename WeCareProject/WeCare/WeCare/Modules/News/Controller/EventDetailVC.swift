@@ -39,7 +39,7 @@ class EventDetailVC: UIViewController {
     ///
     @IBOutlet weak var eventWebViewHeightConstraint: NSLayoutConstraint!
     ///
-    var eventModel: NewsDataModel?
+    var eventModel: DataModel?
     ///
     var eventDateLocationViewBgColor = UIColor.saffron
     ///

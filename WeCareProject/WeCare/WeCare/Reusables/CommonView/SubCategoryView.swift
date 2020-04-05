@@ -26,7 +26,7 @@ class SubCategoryView: UIView {
     ///
     @IBOutlet weak var viewListHeightConstraint: NSLayoutConstraint!
     ///
-    var subCategoryArray = [NewsSubCategoryModel]()
+    var subCategoryArray = [SubCategoryModel]()
     
     ///
     weak var delegate: SubCategorySelectionProtocol?

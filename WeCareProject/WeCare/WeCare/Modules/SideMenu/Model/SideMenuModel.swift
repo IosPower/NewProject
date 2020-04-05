@@ -12,7 +12,7 @@ struct SideMenuModel {
     ///
     var keyName = ""
     ///
-    var keyData: [NewsCategoryModel] = []
+    var keyData: [CategoryModel] = []
     ///
     var imgName = ""
     ///
@@ -20,7 +20,7 @@ struct SideMenuModel {
     ///
     var isExpand = false
     
-    public init(keyName: String, keyData: [NewsCategoryModel], imgName: String, color: UIColor, isExpand: Bool) {
+    public init(keyName: String, keyData: [CategoryModel], imgName: String, color: UIColor, isExpand: Bool) {
         self.keyName = keyName
         self.keyData = keyData
         self.imgName = imgName

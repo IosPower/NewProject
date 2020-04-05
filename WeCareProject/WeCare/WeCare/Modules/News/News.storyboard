@@ -9,10 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--NewsVC-->
+        <!--News Event SurveyVC-->
         <scene sceneID="MW0-Cr-yjD">
             <objects>
-                <viewController storyboardIdentifier="NewsVC" id="nMB-3Q-ixh" customClass="NewsVC" customModule="WeCare" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NewsEventSurveyVC" id="nMB-3Q-ixh" customClass="NewsEventSurveyVC" customModule="WeCare" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="UHr-NF-GN2">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -81,7 +81,7 @@
                                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         </view>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="NewsTableViewCell" id="PGU-6o-rxI" customClass="NewsTableViewCell" customModule="WeCare" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="NewsEventSurveyTableViewCell" id="PGU-6o-rxI" customClass="NewsEventSurveyTableViewCell" customModule="WeCare" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="414" height="161"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="PGU-6o-rxI" id="Z3c-ZL-MBS">

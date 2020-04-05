@@ -27,7 +27,7 @@ class NewsDetailVC: UIViewController {
     ///
     @IBOutlet weak var newsWebViewHeightConstraint: NSLayoutConstraint!
     ///
-    var newsModel: NewsDataModel?
+    var newsModel: DataModel?
     ///
     let closeValue: CGFloat = 0
     ///

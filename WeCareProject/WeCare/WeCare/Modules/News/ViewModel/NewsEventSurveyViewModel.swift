@@ -9,24 +9,24 @@
 
 import SwiftyJSON
 
-class NewsViewModel: NSObject {
+class NewsEventSurveyViewModel: NSObject {
     
     private var apiPath = ""
     
     ///
     let perPageCount = 10
     ///
-    var newsVC: NewsVC?
+    var newsEventSurveyVC: NewsEventSurveyVC?
     ///
     var pageNo = 1
     ///
     var totalCount = 0
     ///
-    var newsCategoryModelArray : [NewsCategoryModel] = []
+    var categoryModelArray : [CategoryModel] = []
     ///
-    var newsRecentMessagesModelArray: [NewsDataModel] = []
+    var newsEventSurveyRecentDataModelArray: [DataModel] = []
     ///
-    var newDataArray : [NewsDataModel] = []
+    var newsEventSurveyDataArray : [DataModel] = []
     ///
     private var categoryKey = ""
     ///
@@ -57,19 +57,19 @@ class NewsViewModel: NSObject {
         }
     }
  
-    init(vc: NewsVC) {
+    init(vc: NewsEventSurveyVC) {
         super.init()
-        newsCategoryModelArray = []
-        newsRecentMessagesModelArray = []
-        newDataArray = []
-        newsVC = vc
+        categoryModelArray = []
+        newsEventSurveyRecentDataModelArray = []
+        newsEventSurveyDataArray = []
+        newsEventSurveyVC = vc
     }
     
     // MARK: - API Call
     func newsListAPI(type: Int, isResetData: Bool, success: @escaping () -> Void, failure: @escaping (_ errorResponse: [String: Any]) -> Void) {
         if isResetData {
-            newsRecentMessagesModelArray = []
-            newDataArray = []
+            newsEventSurveyRecentDataModelArray = []
+            newsEventSurveyDataArray = []
             pageNo = 1
         }
         
@@ -109,15 +109,15 @@ class NewsViewModel: NSObject {
     
     private func parseResponse(jsonData: JSON, isResetData: Bool) {
         guard let sideMenuSectionScreenObject = self.sideMenuSectionScreen else {return}
-        let newsArray = jsonData[ModelKeys.ResponseKeys.data].arrayValue.map {NewsDataModel(json: $0)}
-        let recentArray = jsonData[recentDataKey].arrayValue.map {NewsDataModel(json: $0)}
+        let newsArray = jsonData[ModelKeys.ResponseKeys.data].arrayValue.map {DataModel(json: $0)}
+        let recentArray = jsonData[recentDataKey].arrayValue.map {DataModel(json: $0)}
         if newsArray.count > 0 {
             pageNo += 1
-            newDataArray.append(contentsOf: newsArray)
+            newsEventSurveyDataArray.append(contentsOf: newsArray)
         }
-        newsRecentMessagesModelArray = recentArray
+        newsEventSurveyRecentDataModelArray = recentArray
         if isResetData == false {
-            newsCategoryModelArray = jsonData[categoryKey].arrayValue.map {NewsCategoryModel(json: $0, sideMenuSectionScreen: sideMenuSectionScreenObject)}
+            categoryModelArray = jsonData[categoryKey].arrayValue.map {CategoryModel(json: $0, sideMenuSectionScreen: sideMenuSectionScreenObject)}
         }
     }
     

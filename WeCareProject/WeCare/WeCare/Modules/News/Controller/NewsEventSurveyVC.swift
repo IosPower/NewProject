@@ -1,5 +1,5 @@
 //
-//  NewsVC.swift
+//  newsEventSurveyVC.swift
 //  WeCare
 //
 //  Created by Admin on 25/03/20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NewsVC: UIViewController {
+class NewsEventSurveyVC: UIViewController {
 
     @IBOutlet weak var newsTableView: UITableView!
     
@@ -20,7 +20,7 @@ class NewsVC: UIViewController {
     ///
     @IBOutlet weak var screenTitleLabel: UILabel!
     ///
-    var newsViewModel: NewsViewModel?
+    var newsEventSurveyViewModel: NewsEventSurveyViewModel?
     ///
     @IBOutlet weak var categoryFirstButton: UIButton!
     ///
@@ -42,8 +42,8 @@ class NewsVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        newsViewModel = NewsViewModel(vc: self)
-        newsViewModel?.sideMenuSectionScreen = sideMenuSectionScreen
+        newsEventSurveyViewModel = NewsEventSurveyViewModel(vc: self)
+        newsEventSurveyViewModel?.sideMenuSectionScreen = sideMenuSectionScreen
         newsTableView.estimatedRowHeight = 162
         newsTableView.rowHeight = UITableView.automaticDimension
         setupView()
@@ -108,11 +108,11 @@ class NewsVC: UIViewController {
             return
         }
         
-        var modelObject: NewsDataModel?
+        var modelObject: DataModel?
         if indexPathValue.section == 0 {
-            modelObject = newsViewModel?.newsRecentMessagesModelArray[indexPathValue.row]
+            modelObject = newsEventSurveyViewModel?.newsEventSurveyRecentDataModelArray[indexPathValue.row]
         } else {
-            modelObject = newsViewModel?.newDataArray[indexPathValue.row]
+            modelObject = newsEventSurveyViewModel?.newsEventSurveyDataArray[indexPathValue.row]
         }
         
         switch sideMenuSectionScreen {
@@ -138,10 +138,10 @@ class NewsVC: UIViewController {
     }
     
     @IBAction func categorySecondButtonAction(_ sender: Any) {
-        guard let categoryArray = newsViewModel?.newsCategoryModelArray, categoryArray.count > 1  else {
+        guard let categoryArray = newsEventSurveyViewModel?.categoryModelArray, categoryArray.count > 1  else {
             return
         }
-        if (newsViewModel?.newsCategoryModelArray ?? []).count > 1 {
+        if (newsEventSurveyViewModel?.categoryModelArray ?? []).count > 1 {
             var color = UIColor.black
             switch sideMenuSectionScreen {
             case .news:
@@ -156,7 +156,7 @@ class NewsVC: UIViewController {
                 viewNew.frame = CGRect(x: 0, y: 0, width: Constants.screenWidth, height: Constants.screenHeight)
                 viewNew.delegate = self
                 viewNew.categoryTitleLabel.text = categoryArray[1].message_category_name.capitalized
-                viewNew.subCategoryArray = categoryArray[1].newsSubCategoryModelArray
+                viewNew.subCategoryArray = categoryArray[1].subCategoryModelArray
                 viewNew.setupView()
                 viewNew.viewListHeader.backgroundColor = color
                 
@@ -173,7 +173,7 @@ class NewsVC: UIViewController {
 //
 //        }
         Constants.window?.showHud()
-        newsViewModel?.newsListAPI(type: type, isResetData: isResetData, success: {
+        newsEventSurveyViewModel?.newsListAPI(type: type, isResetData: isResetData, success: {
             Constants.window?.hideHud()
             self.displayCategoryData()
             self.newsTableView.reloadData()
@@ -187,20 +187,20 @@ class NewsVC: UIViewController {
     }
     
     func displayCategoryData()  {
-        guard let categoryArray = newsViewModel?.newsCategoryModelArray, categoryArray.count > 0 else {
+        guard let categoryArray = newsEventSurveyViewModel?.categoryModelArray, categoryArray.count > 0 else {
             return
         }
         categoryFirstButton.setTitle(categoryArray[0].message_category_name, for: .normal)
         if categoryArray.count > 1 {
             categorySecondButton.setTitle(categoryArray[1].message_category_name, for: .normal)
-            if categoryArray[1].newsSubCategoryModelArray.count > 0 {
+            if categoryArray[1].subCategoryModelArray.count > 0 {
                  categoryDropDownImageView.isHidden = false
             }
         }
     }
     
-    func getDataModelAndCellBGColorAndSeparatorColorAndCategoryImage(indexPath: IndexPath) -> (newsObject: NewsDataModel?, cellBgColor: UIColor, separatorViewBgColor: UIColor) {
-        var newsObject: NewsDataModel?
+    func getDataModelAndCellBGColorAndSeparatorColorAndCategoryImage(indexPath: IndexPath) -> (newsObject: DataModel?, cellBgColor: UIColor, separatorViewBgColor: UIColor) {
+        var newsObject: DataModel?
         var cellBgColor = UIColor.white
         var separatorViewBgColor = UIColor.clear
         switch indexPath.section {
@@ -216,11 +216,11 @@ class NewsVC: UIViewController {
                 cellBgColor = .surveyRecentBackgroundColor
                 separatorViewBgColor = .steelBlue
             }
-            newsObject = newsViewModel?.newsRecentMessagesModelArray[indexPath.row]
-            let latArrayIndex = (newsViewModel?.newsRecentMessagesModelArray.count ?? 0) - 1
+            newsObject = newsEventSurveyViewModel?.newsEventSurveyRecentDataModelArray[indexPath.row]
+            let latArrayIndex = (newsEventSurveyViewModel?.newsEventSurveyRecentDataModelArray.count ?? 0) - 1
             separatorViewBgColor = latArrayIndex == indexPath.row ? separatorViewBgColor : .clear
         case 1:
-            newsObject = newsViewModel?.newDataArray[indexPath.row]
+            newsObject = newsEventSurveyViewModel?.newsEventSurveyDataArray[indexPath.row]
         default:
             break
         }
@@ -228,53 +228,53 @@ class NewsVC: UIViewController {
     }
 }
 // MARK: - UITableViewDataSource
-extension NewsVC: UITableViewDataSource {
+extension NewsEventSurveyVC: UITableViewDataSource {
     ///
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return newsViewModel?.newsRecentMessagesModelArray.count ?? 0
+            return newsEventSurveyViewModel?.newsEventSurveyRecentDataModelArray.count ?? 0
         case 1:
-            return newsViewModel?.newDataArray.count ?? 0
+            return newsEventSurveyViewModel?.newsEventSurveyDataArray.count ?? 0
         default:
             return 0
         }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return newsViewModel?.sectionHeaderArray().count ?? 0
+        return newsEventSurveyViewModel?.sectionHeaderArray().count ?? 0
     }
     
     ///
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cellNewsList = tableView.dequeueReusableCell(withIdentifier: "NewsTableViewCell") as? NewsTableViewCell else {
+        guard let cellNewsEventSurvey = tableView.dequeueReusableCell(withIdentifier: "NewsEventSurveyTableViewCell") as? NewsEventSurveyTableViewCell else {
             fatalError("Cell not exists in storyboard")
         }
-        cellNewsList.sideMenuSectionScreen = sideMenuSectionScreen
+        cellNewsEventSurvey.sideMenuSectionScreen = sideMenuSectionScreen
         
         let tupleValues = getDataModelAndCellBGColorAndSeparatorColorAndCategoryImage(indexPath: indexPath)
         
-        cellNewsList.setupCell(cellBgColor: tupleValues.cellBgColor, separatorViewBgColor: tupleValues.separatorViewBgColor)
+        cellNewsEventSurvey.setupCell(cellBgColor: tupleValues.cellBgColor, separatorViewBgColor: tupleValues.separatorViewBgColor)
         
-        cellNewsList.selectButton.tag = indexPath.row
-        cellNewsList.selectButton.addTarget(self, action: #selector(selectButtonActionFromCell), for: .touchUpInside)
+        cellNewsEventSurvey.selectButton.tag = indexPath.row
+        cellNewsEventSurvey.selectButton.addTarget(self, action: #selector(selectButtonActionFromCell), for: .touchUpInside)
         
-        cellNewsList.displayData(modelObject: tupleValues.newsObject, index: indexPath.row)
-        return cellNewsList
+        cellNewsEventSurvey.displayData(modelObject: tupleValues.newsObject, index: indexPath.row)
+        return cellNewsEventSurvey
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-          guard let newsViewModelObject = newsViewModel else {
+          guard let newsEventSurveyViewModelObject = newsEventSurveyViewModel else {
               return
           }
-          if indexPath.section == 1 && indexPath.row > 0 && (indexPath.row + 1) % (10 * (newsViewModelObject.pageNo - 1)) == 0 {
+          if indexPath.section == 1 && indexPath.row > 0 && (indexPath.row + 1) % (10 * (newsEventSurveyViewModelObject.pageNo - 1)) == 0 {
             newsListApiCall(type: typeValue, isResetData: false)
           }
       }
 }
 
 // MARK: - UITableViewDelegate
-extension NewsVC: UITableViewDelegate {
+extension NewsEventSurveyVC: UITableViewDelegate {
     ///
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
@@ -295,7 +295,7 @@ extension NewsVC: UITableViewDelegate {
             headerMenu.sectionSeparatorLabel.backgroundColor = .surveySeparatorLabelBackgroundColor
             headerMenu.backgroundColor = section == 0 ? UIColor.surveyRecentBackgroundColor: .white
         }
-        headerMenu.newsSectionTitleLabel.text = newsViewModel?.sectionHeaderArray()[section] ?? ""
+        headerMenu.newsSectionTitleLabel.text = newsEventSurveyViewModel?.sectionHeaderArray()[section] ?? ""
         return headerMenu
     }
     
@@ -304,7 +304,7 @@ extension NewsVC: UITableViewDelegate {
         return 45
     }
 }
-extension NewsVC: SubCategorySelectionProtocol {
+extension NewsEventSurveyVC: SubCategorySelectionProtocol {
     func selectSubCatgory(selectedName: String) {
         subCategoryView?.removeFromSuperview()
         typeValue = 2
