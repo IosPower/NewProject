@@ -4,7 +4,7 @@ class NewsCategoryModel: NSObject {
     var id = 0
     var message_category_name = ""
     var newsSubCategoryModelArray: [NewsSubCategoryModel] = []
-    
+    var isExpand = false
     // MARK: - Initialize
    
     ///

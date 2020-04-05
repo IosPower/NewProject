@@ -669,10 +669,15 @@ struct _R: Rswift.Validatable {
       let bundle = R.hostingBundle
       let eventDetailVC = StoryboardViewControllerResource<EventDetailVC>(identifier: "EventDetailVC")
       let name = "News"
+      let newsDetailVC = StoryboardViewControllerResource<NewsDetailVC>(identifier: "NewsDetailVC")
       let newsVC = StoryboardViewControllerResource<NewsVC>(identifier: "NewsVC")
 
       func eventDetailVC(_: Void = ()) -> EventDetailVC? {
         return UIKit.UIStoryboard(resource: self).instantiateViewController(withResource: eventDetailVC)
+      }
+
+      func newsDetailVC(_: Void = ()) -> NewsDetailVC? {
+        return UIKit.UIStoryboard(resource: self).instantiateViewController(withResource: newsDetailVC)
       }
 
       func newsVC(_: Void = ()) -> NewsVC? {
@@ -691,6 +696,7 @@ struct _R: Rswift.Validatable {
           if UIKit.UIColor(named: "saffron", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Color named 'saffron' is used in storyboard 'News', but couldn't be loaded.") }
         }
         if _R.storyboard.news().eventDetailVC() == nil { throw Rswift.ValidationError(description:"[R.swift] ViewController with identifier 'eventDetailVC' could not be loaded from storyboard 'News' as 'EventDetailVC'.") }
+        if _R.storyboard.news().newsDetailVC() == nil { throw Rswift.ValidationError(description:"[R.swift] ViewController with identifier 'newsDetailVC' could not be loaded from storyboard 'News' as 'NewsDetailVC'.") }
         if _R.storyboard.news().newsVC() == nil { throw Rswift.ValidationError(description:"[R.swift] ViewController with identifier 'newsVC' could not be loaded from storyboard 'News' as 'NewsVC'.") }
       }
 

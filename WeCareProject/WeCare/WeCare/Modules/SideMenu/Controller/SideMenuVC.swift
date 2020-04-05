@@ -41,51 +41,35 @@ class SideMenuVC: UIViewController {
     
     var bottomMenuHeightObject = BottomMenuHeight.close
     
-    var mainDataArray = [[
-        "keyName": "BERICHTEN",
-        "keyData": [
-            ["titleName": "TAKING CARE",
-             "color": UIColor(displayP3Red: 189/255, green: 207/255, blue: 89/255, alpha: 1.0)],
-            ["titleName": "VAILLANT GROUP",
-             "color": UIColor(displayP3Red: 223/255, green: 232/255, blue: 177/255, alpha: 1.0)]
-        ],
-        "imgName": "icn_menu_news",
-        "color": UIColor.lightGreen,
-        "isExpand": false
-        ], [
-            "keyName": "EVENTS",
-            "keyData": [
-                ["titleName": "KLANTEN",
-                 "color": UIColor(displayP3Red: 231/255, green: 178/255, blue: 108/255, alpha: 1.0)],
-                ["titleName": "PERSONEEL",
-                 "color": UIColor(displayP3Red: 238/255, green: 198/255, blue: 145/255, alpha: 1.0)]
-            ],
-            "imgName": "icn_menu_event",
-            "color" : UIColor.saffron,
-            "isExpand": false
-        ], [
-            "keyName": "ENQUÊTE",
-            "keyData": [],
-            "imgName": "icn_menu_inquiries",
-            "color" : UIColor.steelBlue,
-            "isExpand": false
-        ], [
-            "keyName": "WIE IS WIE",
-            "keyData": [],
-            "imgName": "icn_menu_whoiswho",
-            "color" : UIColor.grayNew,
-            "isExpand": false
-        ]]
+    var sideMenuViewModel = SideMenuViewModel()
 
+    let newsSectionFirstIndexColor = UIColor(displayP3Red: 189/255, green: 207/255, blue: 89/255, alpha: 1.0)
+    let newsSectionSecondIndexColor = UIColor(displayP3Red: 223/255, green: 232/255, blue: 177/255, alpha: 1.0)
+    
+    let newsSectionSubCategoryFirstIndexColor = UIColor(displayP3Red: 139/255, green: 194/255, blue: 74/255, alpha: 1.0)
+    let newsSectionSubCategorySecondIndexColor = UIColor(displayP3Red: 155/255, green: 204/255, blue: 101/255, alpha: 1.0)
+    
+    
+    let eventSectionFirstIndexColor = UIColor(displayP3Red: 231/255, green: 178/255, blue: 108/255, alpha: 1.0)
+    let eventSectionSecondIndexColor = UIColor(displayP3Red: 238/255, green: 198/255, blue: 145/255, alpha: 1.0)
+    
+    
+    
+    
+    var CELLHEIGHT = 45
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         registerViews(forTableView: menuTableView)
+        
+        callNewsCategoryApiCall()
+        callEventCategoryApiCall()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewStarusbar.backgroundColor = statusBarColor
+//        viewStarusbar.backgroundColor = statusBarColor
+        viewStarusbar.backgroundColor = UIColor.white
     }
   
     func registerViews(forTableView tableView: UITableView) {
@@ -106,8 +90,11 @@ class SideMenuVC: UIViewController {
         bottomMenuViewHeightConstraint.constant = CGFloat(bottomMenuHeightObject.rawValue)
         bottomMenuOpenCloseButton.setImage(UIImage(named: imgName), for: .normal)
         
-        for (index, _) in mainDataArray.enumerated() {
-            mainDataArray[index]["isExpand"] = false
+        for (index, _) in sideMenuViewModel.sideMenuModelArray.enumerated() {
+            sideMenuViewModel.sideMenuModelArray[index].isExpand = false
+            for (categoryIndex, _) in sideMenuViewModel.sideMenuModelArray[index].keyData.enumerated() {
+                sideMenuViewModel.sideMenuModelArray[index].keyData[categoryIndex].isExpand = false
+            }
         }
         menuTableView.reloadData()
     }
@@ -122,16 +109,34 @@ class SideMenuVC: UIViewController {
     }
     ///
     @objc func menuButtonActionFromCell(sender: UIButton) {
+        
         let buttonPosition:CGPoint = sender.convert(CGPoint.zero, to:menuTableView)
         guard let indexPath = self.menuTableView.indexPathForRow(at: buttonPosition) else {return}
+        
+         let categoryModelArray = sideMenuViewModel.sideMenuModelArray[indexPath.section].keyData
+         let subCategoryArray = categoryModelArray[indexPath.row].newsSubCategoryModelArray
+        
         switch (indexPath.section, indexPath.row) {
         case (0, 0):
             if let newsVC = R.storyboard.news.newsVC() {
+                newsVC.sideMenuSectionScreen = .news
                 self.push(viewController: newsVC, animated: false)
             }
         case (0, 1):
-            if let newsVC = R.storyboard.news.newsVC() {
-                self.push(viewController: newsVC, animated: false)
+            if subCategoryArray.count > 0 {
+                for (index, data) in sideMenuViewModel.sideMenuModelArray[indexPath.section].keyData.enumerated() {
+                    if indexPath.row == index {
+                        sideMenuViewModel.sideMenuModelArray[indexPath.section].keyData[index].isExpand = data.isExpand == false ? true : false
+                    } else {
+                        sideMenuViewModel.sideMenuModelArray[indexPath.section].keyData[index].isExpand = false
+                    }
+                }
+                menuTableView.reloadData()
+            } else {
+                if let newsVC = R.storyboard.news.newsVC() {
+                    newsVC.sideMenuSectionScreen = .news
+                    self.push(viewController: newsVC, animated: false)
+                }
             }
         case (1, 0):
             if let newsVC = R.storyboard.news.newsVC() {
@@ -140,6 +145,7 @@ class SideMenuVC: UIViewController {
             }
         case (1, 0):
             if let newsVC = R.storyboard.news.newsVC() {
+                newsVC.sideMenuSectionScreen = .event
                 self.push(viewController: newsVC, animated: false)
             }
         default:
@@ -147,83 +153,120 @@ class SideMenuVC: UIViewController {
         }
     }
     
+    @objc func subCategoryButtonActionFromCell(sender: UIButton) {
+        let buttonPosition:CGPoint = sender.convert(CGPoint.zero, to:menuTableView)
+        guard let indexPath = self.menuTableView.indexPathForRow(at: buttonPosition) else {return}
+        
+        let categoryModelArray = sideMenuViewModel.sideMenuModelArray[indexPath.section].keyData
+        let subCategoryArray = categoryModelArray[indexPath.row].newsSubCategoryModelArray
+        
+        let subCategoryName = subCategoryArray[sender.tag].message_category_name
+        print("subCategoryName", subCategoryName)
+        switch indexPath.section {
+        case 0:
+            // currenly subcategory available only in news
+            if let newsVC = R.storyboard.news.newsVC() {
+                newsVC.sideMenuSectionScreen = .news
+                self.push(viewController: newsVC, animated: false)
+            }
+        case 1:
+            break
+        case 2:
+            break
+        case 3:
+            break
+        default:
+            break
+        }
+        
+    }
+    
     @objc func headerButtonActionFromCell(sender: UIButton) {
+        
+        // if bottom menu open so close it
+        if bottomMenuHeightObject == .open {
+            bottomMenuOpenCloseButtonAction(self)
+        }
+        
         let section = sender.tag
-        guard let titleArray =  mainDataArray[section]["keyData"] as? [[String: Any]] else { return }
-        if titleArray.count > 0 {
-            for (index, data) in mainDataArray.enumerated() {
+        let categoryModelArray = sideMenuViewModel.sideMenuModelArray[section].keyData
+        
+        // here if category data available so open or close and if not available so direct navigation according to section
+        if categoryModelArray.count > 0 {
+            for (index, data) in sideMenuViewModel.sideMenuModelArray.enumerated() {
                 if section == index {
-                    mainDataArray[index]["isExpand"] = data["isExpand"] as? Bool == false ? true : false
+                    sideMenuViewModel.sideMenuModelArray[index].isExpand = data.isExpand == false ? true : false
                 } else {
-                    mainDataArray[index]["isExpand"] = false
+                    sideMenuViewModel.sideMenuModelArray[index].isExpand = false
+                }
+                
+                for (categoryIndex, _) in sideMenuViewModel.sideMenuModelArray[index].keyData.enumerated() {
+                    sideMenuViewModel.sideMenuModelArray[index].keyData[categoryIndex].isExpand = false
                 }
             }
             menuTableView.reloadData()
         } else {
-           switch (section) {
-           case 0:
-               print("")
-           case 1:
-               print("")
-           case 2:
+            switch (section) {
+            case 0:
                 if let newsVC = R.storyboard.news.newsVC() {
-                              newsVC.sideMenuSectionScreen = .survey
-                              self.push(viewController: newsVC, animated: false)
-                          }
-           case 3:
-               if let whoVC = R.storyboard.user.userVC() {
-                   self.push(viewController: whoVC, animated: false)
-               }
-           default:
-               break
-           }
+                    newsVC.sideMenuSectionScreen = .news
+                    self.push(viewController: newsVC, animated: false)
+                }
+            case 1:
+                if let newsVC = R.storyboard.news.newsVC() {
+                    newsVC.sideMenuSectionScreen = .event
+                    self.push(viewController: newsVC, animated: false)
+                }
+            case 2:
+                if let newsVC = R.storyboard.news.newsVC() {
+                    newsVC.sideMenuSectionScreen = .survey
+                    self.push(viewController: newsVC, animated: false)
+                }
+            case 3:
+                if let whoVC = R.storyboard.user.userVC() {
+                    self.push(viewController: whoVC, animated: false)
+                }
+            default:
+                break
+            }
         }
     }
     
-    func hexColorToRgb(hex: String) -> UIColor? {
-        var hexSanitized = hex.trimmingCharacters(in: .whitespacesAndNewlines)
-        hexSanitized = hexSanitized.replacingOccurrences(of: "#", with: "")
-
-        var rgb: UInt32 = 0
-
-        var r: CGFloat = 0.0
-        var g: CGFloat = 0.0
-        var b: CGFloat = 0.0
-        var a: CGFloat = 1.0
-
-        let length = hexSanitized.count
-
-        guard Scanner(string: hexSanitized).scanHexInt32(&rgb) else { return nil }
-
-        if length == 6 {
-            r = CGFloat((rgb & 0xFF0000) >> 16) / 255.0
-            g = CGFloat((rgb & 0x00FF00) >> 8) / 255.0
-            b = CGFloat(rgb & 0x0000FF) / 255.0
-
-        } else if length == 8 {
-            r = CGFloat((rgb & 0xFF000000) >> 24) / 255.0
-            g = CGFloat((rgb & 0x00FF0000) >> 16) / 255.0
-            b = CGFloat((rgb & 0x0000FF00) >> 8) / 255.0
-            a = CGFloat(rgb & 0x000000FF) / 255.0
-
-        } else {
-            return nil
-        }
-        return UIColor(displayP3Red: r, green: g, blue: b, alpha: a)
+    // news category api call
+    func callNewsCategoryApiCall() {
+        sideMenuViewModel.newsCategoryListAPI(success: {
+            self.menuTableView.reloadData()
+        
+        },  failure: { [weak self] (responseDict) in
+            if let message = responseDict[ModelKeys.ResponseKeys.message] as? String {
+                self?.showAlert(message: message, buttonTitle: Messages.Button.okButton)
+            }
+        })
+    }
+    // event category api call
+    func callEventCategoryApiCall() {
+        sideMenuViewModel.eventCategoryListAPI(success: {
+            self.menuTableView.reloadData()
+        },  failure: { [weak self] (responseDict) in
+            if let message = responseDict[ModelKeys.ResponseKeys.message] as? String {
+                self?.showAlert(message: message, buttonTitle: Messages.Button.okButton)
+            }
+        })
     }
 }
 
 // MARK: - UITableViewDataSource
 extension SideMenuVC: UITableViewDataSource {
-    
+    ///
     func numberOfSections(in tableView: UITableView) -> Int {
-        return mainDataArray.count
+        return sideMenuViewModel.sideMenuModelArray.count
     }
     
     ///
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let titleArray =  mainDataArray[section]["keyData"] as? [[String: Any]], let isExpand = mainDataArray[section]["isExpand"] as? Bool else {return 0}
-        return isExpand ? titleArray.count : 0
+        let categoryModelArray = sideMenuViewModel.sideMenuModelArray[section].keyData
+        let isExpandSection = sideMenuViewModel.sideMenuModelArray[section].isExpand
+        return isExpandSection ? categoryModelArray.count : 0
     }
     
     ///
@@ -231,13 +274,92 @@ extension SideMenuVC: UITableViewDataSource {
         guard let cellSideMenu = menuTableView.dequeueReusableCell(withIdentifier: "SideMenuTableViewCell") as? SideMenuTableViewCell else {
             fatalError("Cell not exists in storyboard")
         }
+        let categoryModelArray = sideMenuViewModel.sideMenuModelArray[indexPath.section].keyData
+        let subCategoryArray = categoryModelArray[indexPath.row].newsSubCategoryModelArray
+        let isExpandSubCategory = categoryModelArray[indexPath.row].isExpand
         
-        if let titleArray =  mainDataArray[indexPath.section]["keyData"] as? [[String: Any]] {
-            let cellColor = titleArray[indexPath.row]["color"] as? UIColor
-            cellSideMenu.menuTitleLabel.text = titleArray[indexPath.row]["titleName"] as? String ?? ""
-            cellSideMenu.viewCell.backgroundColor = cellColor ?? UIColor.black
+        var heightConstraint = CELLHEIGHT
+       
+        if subCategoryArray.count > 0 {
+            if isExpandSubCategory {
+                cellSideMenu.menuSelectButton.setImage(R.image.icn_uparrow(), for: .normal)
+                
+                // get total height of view cell according to subCategoryArray, by default height 45
+                heightConstraint += subCategoryArray.count * CELLHEIGHT
+                
+                // remove all views from stack view
+                for subView in cellSideMenu.verticalStackView.subviews {
+                    cellSideMenu.verticalStackView.removeArrangedSubview(subView)
+                }
+                
+                // add subcategory view inside cell
+                for (index, data) in subCategoryArray.enumerated() {
+                    let viewStackContainer = UIView()
+                    viewStackContainer.tag = index
+                    
+                    switch index {
+                    case 0:
+                        //
+                        viewStackContainer.backgroundColor = newsSectionSubCategoryFirstIndexColor
+                    case 1:
+                        viewStackContainer.backgroundColor = newsSectionSubCategorySecondIndexColor
+                    default:
+                        break
+                    }
+                    
+                    // create label and add to view
+                    let label = UILabel(frame: CGRect(x: 75, y: Int(12.5), width: (Int(cellSideMenu.bounds.size.width - 75 - 20)), height: 20))
+                    label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+                    label.text = data.message_category_name.uppercased()
+                    label.textColor = UIColor.white
+                   
+                    let buttonSubCategory = UIButton(frame: CGRect(x: 0, y: 0, width: cellSideMenu.frame.size.width, height: cellSideMenu.frame.size.height))
+                    buttonSubCategory.setTitle("", for: .normal)
+                    buttonSubCategory.tag = index
+                    buttonSubCategory.addTarget(self, action: #selector(subCategoryButtonActionFromCell), for: .touchUpInside)
+                    
+                    viewStackContainer.addSubview(label)
+                    viewStackContainer.addSubview(buttonSubCategory)
+                    // add viewStackContainer to verticalStackView which is inside cell
+                    cellSideMenu.verticalStackView.addArrangedSubview(viewStackContainer)
+                }
+            } else {
+                cellSideMenu.menuSelectButton.setImage(R.image.icn_downarrow(), for: .normal)
+            }
+        } else {
+            cellSideMenu.menuSelectButton.setImage(nil, for: .normal)
         }
-        cellSideMenu.menuSelectButton.setImage(nil, for: .normal)
+       
+        cellSideMenu.viewCellHeightConstraint.constant = CGFloat(heightConstraint)
+        
+        var cellColor = UIColor.black
+        switch indexPath.section {
+        case 0:
+            switch indexPath.row {
+            case 0:
+                cellColor = newsSectionFirstIndexColor
+            case 1:
+                cellColor = newsSectionSecondIndexColor
+            default:
+                break
+            }
+        case 1:
+            // section's cell background color
+            switch indexPath.row {
+            case 0:
+                cellColor = eventSectionFirstIndexColor
+                case 1:
+                cellColor = eventSectionSecondIndexColor
+            default:
+                break
+            }
+        default:
+            break
+        }
+        
+        
+        cellSideMenu.menuTitleLabel.text = categoryModelArray[indexPath.row].message_category_name.uppercased()
+        cellSideMenu.viewCell.backgroundColor = cellColor
         cellSideMenu.menuSelectButton.tag = indexPath.row
         cellSideMenu.menuSelectButton.addTarget(self, action: #selector(menuButtonActionFromCell), for: .touchUpInside)
         return cellSideMenu
@@ -251,28 +373,24 @@ extension SideMenuVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let headerMenu = Bundle.main.loadNibNamed(R.nib.sideMenuSectionHeader.name, owner: self, options: nil)?[0] as? SideMenuSectionHeader else { return SideMenuSectionHeader() }
             
-        let imgName = mainDataArray[section]["imgName"] as? String ?? ""
+        let imgName = sideMenuViewModel.sideMenuModelArray[section].imgName
         
-        let isExpand = mainDataArray[section]["isExpand"] as? Bool ?? false
+        let isExpand = sideMenuViewModel.sideMenuModelArray[section].isExpand
         
-        let titleArray =  mainDataArray[section]["keyData"] as? [[String: Any]] ?? []
+        let categoryModelArray =  sideMenuViewModel.sideMenuModelArray[section].keyData
             
-        let foldUnfoldImage = titleArray.count > 0 ? UIImage(named: isExpand ? "icn_uparrow" : "icn_downarrow") : nil
+        let foldUnfoldImage = categoryModelArray.count > 0 ? UIImage(named: isExpand ? "icn_uparrow" : "icn_downarrow") : nil
         
         headerMenu.headerSelectButton.setImage(foldUnfoldImage, for: .normal)
-        headerMenu.viewHeader.backgroundColor = mainDataArray[section]["color"] as? UIColor ?? UIColor.black
+        headerMenu.viewHeader.backgroundColor = sideMenuViewModel.sideMenuModelArray[section].sectionBgColor
         headerMenu.headerImgView.image = UIImage(named: imgName)
-        headerMenu.headerTitleLabel.text = mainDataArray[section]["keyName"] as? String ?? ""
+        headerMenu.headerTitleLabel.text = sideMenuViewModel.sideMenuModelArray[section].keyName
             headerMenu.headerSelectButton.tag = section
             headerMenu.headerSelectButton.addTarget(self, action: #selector(headerButtonActionFromCell), for: .touchUpInside)
         return headerMenu
     }
     ///
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 45
-    }
-    ///
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 45
+        return CGFloat(CELLHEIGHT)
     }
 }

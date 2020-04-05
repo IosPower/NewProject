@@ -22,13 +22,16 @@ struct ApiList {
     struct News {
         ///
         static let newsList = "messages-list"
-        
+        ///
+        static let newsCategory = "messages-category"
     }
+    
     ///
     struct Event {
         ///
         static let eventList = "event-list"
-        
+        ///
+        static let eventCategory = "event-category"
     }
     ///
     struct Survey {

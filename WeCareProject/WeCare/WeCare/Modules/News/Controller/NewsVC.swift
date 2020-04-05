@@ -117,7 +117,10 @@ class NewsVC: UIViewController {
         
         switch sideMenuSectionScreen {
         case .news:
-            break
+            if let newsDetailVC = R.storyboard.news.newsDetailVC() {
+                newsDetailVC.newsModel = modelObject
+                self.push(viewController: newsDetailVC, animated: false)
+            }
         case .event:
             if let eventDetailVC = R.storyboard.news.eventDetailVC() {
                 eventDetailVC.eventModel = modelObject

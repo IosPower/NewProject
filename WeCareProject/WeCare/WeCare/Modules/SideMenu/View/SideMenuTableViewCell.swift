@@ -15,13 +15,9 @@ class SideMenuTableViewCell: UITableViewCell {
     @IBOutlet weak var menuSelectButton: UIButton!
     ///
     @IBOutlet weak var viewCell: UIView!
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
+    ///
+    @IBOutlet weak var verticalStackView: UIStackView!
+    ///
+    @IBOutlet weak var viewCellHeightConstraint: NSLayoutConstraint!
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
 }
