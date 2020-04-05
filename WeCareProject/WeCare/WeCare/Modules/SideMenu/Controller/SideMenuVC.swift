@@ -32,15 +32,19 @@ class SideMenuVC: UIViewController {
     @IBOutlet weak var bottomMenuInstellingenLabel: UILabel!
     ///
     @IBOutlet weak var bottomMenuLogoutLabel: UILabel!
-    ///
-    var statusBarColor =  UIColor.white
+  
     ///
     @IBOutlet weak var bottomMenuViewHeightConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var bottomMenuOpenCloseButton: UIButton!
     
+    // MARK: - Variables
+
+    ///
     var bottomMenuHeightObject = BottomMenuHeight.close
-    
+    ///
+    var statusBarColor =  UIColor.white
+    ///
     var sideMenuViewModel = SideMenuViewModel()
 
     let newsSectionFirstIndexColor = UIColor(displayP3Red: 189/255, green: 207/255, blue: 89/255, alpha: 1.0)
@@ -54,9 +58,9 @@ class SideMenuVC: UIViewController {
     let eventSectionSecondIndexColor = UIColor(displayP3Red: 238/255, green: 198/255, blue: 145/255, alpha: 1.0)
     
     
-    
-    
     var CELLHEIGHT = 45
+    
+    // MARK: - Life Cycles
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,10 +76,13 @@ class SideMenuVC: UIViewController {
         viewStarusbar.backgroundColor = UIColor.white
     }
   
+    // MARK: - Setup
     func registerViews(forTableView tableView: UITableView) {
         // Cell
         tableView.register(UINib(resource: R.nib.sideMenuTableViewCell), forCellReuseIdentifier: "SideMenuTableViewCell")
     }
+    
+    // MARK: - Button Actions
     
     ///
     @IBAction func homeButtonAction(_ sender: Any) {
@@ -231,6 +238,8 @@ class SideMenuVC: UIViewController {
             }
         }
     }
+    
+    // MARK: - Api
     
     // news category api call
     func callNewsCategoryApiCall() {
